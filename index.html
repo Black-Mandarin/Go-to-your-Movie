@@ -1,41 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Go To The Movies</title>
-</head>
+    <link rel="style.css" href="stylesheet" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="semantic/dist/semantic.min.css"
+    />
+  </head>
 
-<body>
-<!-- Header -->
-<div class="header navigation">
-    <h1>Go To The Movies</h1>
+  <body>
+    <div class="mainContainer">
+      <header>
+        <h1 id="H1">Go to the Movies</h1>
+        <nav>
+          <a href="#">Search By Location</a>
+          <a href="#">About Us</a>
+        </nav>
+      </header>
 
-    <button class="btn btn-primary" type="button" id="movieSearchBtn"></button>
-    <button class="btn btn-primary" type="button" id="locationSearchBtn"></button>  
-    <button class="btn btn-primary" type="button" id="aboutUsBtn"></button>
+      <div class="searchBox">
+        <div class="searchBy"></div>
 
-</div>
+        <div class="recentSearches"></div>
+      </div>
 
-<!-- Search and previous searches section-->
+      <div class="resultBox">
+        <div class="searchResults"></div>
+        <div class="searchResultImages"></div>
+      </div>
+    </div>
 
-<!-- Location list section-->
-    <!-- Movie list section-->
-
-<!-- Movie list section-->
-    <!-- Location list section-->
-
-
-<!-- About Us section-->
-<div container class="aboutUS" id="aboutUS">
-    <h3> About Us</h3>
-
-
-
-</div>
-
-
-    
-</body>
+    <footer>
+      <p id="footer">Go to The Movies &copy 2022</p>
+    </footer>
+  </body>
 </html>
