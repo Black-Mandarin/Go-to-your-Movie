@@ -5,35 +5,70 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Go To The Movies</title>
-    <link rel="style.css" href="stylesheet" />
     <link
       rel="stylesheet"
       type="text/css"
-      href="semantic/dist/semantic.min.css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css"
     />
   </head>
 
   <body>
     <div class="mainContainer">
       <header>
-        <h1 id="H1">Go to the Movies</h1>
-        <nav>
-          <a href="#">Search By Location</a>
-          <a href="#">About Us</a>
-        </nav>
+        <h1 class="ui header center aligned">Go to the Movies</h1>
+        <!-- Nav Bar-->
+        <div class="ui fluid three item menu">
+          <a class="item">Search by Location</a>
+          <a class="item">Search by Movie</a>
+          <a class="item">About Us</a>
+        </div>
       </header>
+        <!-- Divder inserted to create seperation-->
+      <div class="ui segment">
+        <div class="ui two column very relaxed grid">
+          <div class="column">
+            <div class="ui icon input loading">
+              <input type="text" placeholder="Search Movie...">
+              <i class="search icon"></i>
+            </div>
+            <button class="positive ui button">Search</button>
+          </div>
+          
+          
+          <!--  Seperation on Both Sides-->
 
-      <div class="searchBox">
-        <div class="searchBy"></div>
+          <div class="column">
 
-        <div class="recentSearches"></div>
-      </div>
-
-      <div class="resultBox">
-        <div class="searchResults"></div>
-        <div class="searchResultImages"></div>
-      </div>
+            <table class="ui inverted red table">
+              <thead>
+                <tr><th>Result</th></tr>
+                <tr>
+                  <td>Melboure Heights</td></tr>
+                <tr>
+                  <td>Orange</td></tr>
+              </tbody>
+            </table>
+            <!-- Cards for display movies info OR WE CAN USE ITEMS INSTEAD OF CARDS?????????-->
+            <!--<div class="ui card">
+  <div class="image">
+    <img src="/images/avatar2/large/kristy.png">
+  </div>
+  <div class="content">
+    <a class="header">Kristy</a>
+    <div class="meta">
+      <span class="date">Joined in 2013</span>
     </div>
+    <div class="description">
+      Kristy is an art director living in New York.
+    </div>
+  </div>
+</div>-->
+          </div>
+        </div>
+        <div class="ui vertical divider">
+          MOVIES
+        </div>
+      </div>
 
     <footer>
       <p id="footer">Go to The Movies &copy 2022</p>
