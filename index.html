@@ -1,55 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Go To Your Movie</title>
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css"
-    />
-  </head>
 
-  <body>
-    <div class="mainContainer">
-      <header>
-        <h1 class="ui header center aligned">Go to your Movie</h1>
-        <!-- Nav Bar-->
-        <div class="ui fluid three item menu">
-          <a class="item">Search by Location</a>
-          <a class="item">Search by Movie</a>
-          <a class="item">About Us</a>
-        </div>
-      </header>
-        <!-- Divder inserted to create seperation-->
-      <div class="ui segment">
-        <div class="ui two column very relaxed grid">
-          <div class="column">
-            <div class="ui icon input loading">
-              <input type="text" placeholder="Search Movie...">
-              <i class="search icon"></i>
-            </div>
-            <button class="positive ui button">Search</button>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Go To Your Movie</title>
+  <link rel="stylesheet" type="text/css"
+    href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
+</head>
+
+<body>
+  <div class="mainContainer">
+    <header>
+      <h1 class="ui header center aligned">Go to your Movie</h1>
+      <!-- Nav Bar-->
+      <div class="ui fluid three item menu">
+        <a class="item">Search by Location</a>
+        <a class="item">Search by Movie</a>
+        <a id="aboutUs" class="item">About Us</a>
+      </div>
+    </header>
+    <!-- Divder inserted to create seperation-->
+    <div class="ui segment">
+      <div class="ui two column very relaxed grid">
+        <div class="column">
+          <div class="ui icon input loading">
+            <input type="text" placeholder="Search Movie...">
+            <i class="search icon"></i>
           </div>
-          
-          
-          <!--  Seperation on Both Sides-->
+          <button class="positive ui button">Search</button>
+        </div>
 
-          <div class="column">
 
-            <table class="ui inverted red table">
-              <thead>
-                <tr><th>Result</th></tr>
-                <tr>
-                  <td>Melboure Heights</td></tr>
-                <tr>
-                  <td>Orange</td></tr>
+        <!--  Seperation on Both Sides-->
+
+        <div class="column">
+
+          <table class="ui inverted red table">
+            <thead>
+              <tr>
+                <th>Result</th>
+              </tr>
+              <tr>
+                <td>Melboure Heights</td>
+              </tr>
+              <tr>
+                <td>Orange</td>
+              </tr>
               </tbody>
-            </table>
-            <!-- Cards for display movies info OR WE CAN USE ITEMS INSTEAD OF CARDS?????????-->
-            <!--<div class="ui card">
+          </table>
+          <!-- Cards for display movies info OR WE CAN USE ITEMS INSTEAD OF CARDS?????????-->
+          <!--<div class="ui card">
   <div class="image">
     <img src="/images/avatar2/large/kristy.png">
   </div>
@@ -63,15 +66,21 @@
     </div>
   </div>
 </div>-->
-          </div>
-        </div>
-        <div class="ui vertical divider">
-          MOVIES
         </div>
       </div>
+      <div class="ui vertical divider">
+        MOVIES
+      </div>
+    </div>
 
     <footer>
-      <p id="footer">Go to The Movies &copy 2022</p>
+      <p id="footer">Go to your Movie &copy 2022</p>
     </footer>
-  </body>
+    <!-- Added link to the jQuery library -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <!-- Your JavaScript file -->
+    <script type="text/javascript" src="./assets/JS/script.js"></script>
+</body>
+
 </html>
