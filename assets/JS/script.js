@@ -1,13 +1,20 @@
+
 // About Us
 
 $(document).on('click', '#aboutUs', function (event) {
     event.preventDefault();
-    var footer = $('footer')
+    $('#aboutUsContentParent').attr('style', 'display:block');
 
-    // var wind = ;
+});
+
+function aboutUsContentCreation() {
+    // about US content holder appended just above footer element
+    var footer = $('footer')
     var aboutUsContentParent = $('<div>');
     aboutUsContentParent.attr('class', 'ui segment');
     aboutUsContentParent.attr('id', 'aboutUsContentParent');
+    aboutUsContentParent.attr('style', 'display:none');
+
     // aboutUsContent.text("Hello we are here.");
 
     // Adding Header for About US
@@ -54,4 +61,10 @@ $(document).on('click', '#aboutUs', function (event) {
     aboutUsContentParent.append(aboutUsProjectRepositoryURL);
 
     footer.before(aboutUsContentParent);
+};
+
+
+// Create time scheduler on the fly at when initial page load finished. 
+$(document).ready(function (event) {
+    aboutUsContentCreation();
 });
