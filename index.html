@@ -10,12 +10,16 @@
       type="text/css"
       href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css"
     />
+
+    <link rel="semantic.min.css" href="semantic.min.css" />
   </head>
 
   <body>
-    <div class="mainContainer">
+    <!-- Main Container-->
+    <div class="ui segment">
       <header>
         <h1 class="ui header center aligned">Go to your Movie</h1>
+
         <!-- Nav Bar-->
         <div class="ui fluid three item menu">
           <a class="item">Search by Location</a>
@@ -23,52 +27,35 @@
           <a class="item">About Us</a>
         </div>
       </header>
-        <!-- Divder inserted to create seperation-->
+
+      <!-- Divder inserted to create seperation-->
       <div class="ui segment">
         <div class="ui two column very relaxed grid">
           <div class="column">
             <div class="ui icon input loading">
-              <input type="text" placeholder="Search Movie...">
+              <input type="text" placeholder="Search Movie..." />
               <i class="search icon"></i>
             </div>
             <button class="positive ui button">Search</button>
+            <div class="ui raised segment">
+              <h3 class="ui header center aligned">Recent Searches</h3>
+              <ol class="ui list">
+                <li>Spider Man</li>
+                <li>Spider Man</li>
+                <li>Spider Man</li>
+                <li>Spider Man</li>
+                <li>Spider Man</li>
+              </ol>
+            </div>
           </div>
-          
-          
+
           <!--  Seperation on Both Sides-->
 
-          <div class="column">
-
-            <table class="ui inverted red table">
-              <thead>
-                <tr><th>Result</th></tr>
-                <tr>
-                  <td>Melboure Heights</td></tr>
-                <tr>
-                  <td>Orange</td></tr>
-              </tbody>
-            </table>
-            <!-- Cards for display movies info OR WE CAN USE ITEMS INSTEAD OF CARDS?????????-->
-            <!--<div class="ui card">
-  <div class="image">
-    <img src="/images/avatar2/large/kristy.png">
-  </div>
-  <div class="content">
-    <a class="header">Kristy</a>
-    <div class="meta">
-      <span class="date">Joined in 2013</span>
-    </div>
-    <div class="description">
-      Kristy is an art director living in New York.
-    </div>
-  </div>
-</div>-->
-          </div>
+          <div class="column"></div>
         </div>
-        <div class="ui vertical divider">
-          MOVIES
-        </div>
+        <div class="ui vertical divider">MOVIES</div>
       </div>
+    </div>
 
     <footer>
       <p id="footer">Go to The Movies &copy 2022</p>
