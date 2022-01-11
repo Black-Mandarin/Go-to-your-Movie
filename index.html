@@ -15,11 +15,11 @@
   </head>
 
   <body>
-    <!-- Main Container-->
+    <!-- Main Column-->
     <div class="ui segment">
       <header>
-        <h1 class="ui header center aligned">Go to your Movie</h1>
-
+        <!-- Header  Not Working??-->
+        <h1 class="ui header">Go to The Movies </h1>
         <!-- Nav Bar-->
         <div class="ui fluid three item menu">
           <a class="item">Search by Location</a>
@@ -28,41 +28,69 @@
         </div>
       </header>
 
-      <!-- Divder inserted to create seperation-->
-      <div class="ui segment">
-        <div class="ui two column very relaxed grid">
-          <div class="column">
-            <div class="ui icon input loading">
-              <input type="text" placeholder="Search Movie..." />
-              <i class="search icon"></i>
-            </div>
-            <button class="positive ui button">Search</button>
-            <div class="ui raised segment">
-              <h3 class="ui header center aligned">Recent Searches</h3>
+      <div class="ui grid">
+
+        <!--Search By Column-->
+        <div class="four wide column">
+
+          <!-- Search Box-->
+          <div class="ui segment">
+            <form class="ui form">
+              <div class="field ui icon input">
+                <input id="inputSearch" type="text" placeholder="Search Movie...">
+                <i class="search icon"></i>
+              </div>
+              <button id="submitButton" class="positive ui button" type="submit">Search</button>
+            </form>
+
+            <div class="ui segment">
+              <h3 class="ui center aligned header">Recent Searches</h3>
               <ol class="ui list">
-                <li>Spider Man</li>
-                <li>Spider Man</li>
-                <li>Spider Man</li>
-                <li>Spider Man</li>
-                <li>Spider Man</li>
-                <li>Spider Man</li>
-                <li>Spider Man</li>
-                <li>Spider Man</li>
-                <li>Spider Man</li>
-                <li>Spider Man</li>
-                <li>Spider Man</li>
-                <li>Spider Man</li>
+                <li>Melboure Cinmas</li>
+                <li>Village Crown</li>
               </ol>
             </div>
           </div>
 
-          <!--  Seperation on Both Sides-->
-
-          <div class="column"></div>
+          <!-- Recent Searches-->
+          
         </div>
-        <div class="ui vertical divider">MOVIES</div>
-      </div>
-    </div>
+
+
+
+        <!--Results By Column-->
+        <div class="twelve wide column">
+          <div class="ui segment ">
+            <div class="ui grid">
+              
+              <!--Results Column -->
+              <div class="four wide column">
+                <div class="ui segment">
+                  <p></p>
+                </div>
+  
+              </div>
+              
+              <!--Images Column -->
+              <div class="twelve wide column">
+                <div class="ui segment">
+                  <p></p>
+                </div>
+  
+              </div>
+  
+            
+            </div>
+  
+          </div>
+        </div>
+       
+                
+      
+      
+
+       
+     
 
     <footer>
       <p id="footer">Go to your Movie &copy 2022</p>
