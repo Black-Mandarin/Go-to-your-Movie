@@ -23,30 +23,69 @@ function aboutUsContentCreation() {
     aboutUsHeader.text('Project : Go to your Movie');
     aboutUsContentParent.append(aboutUsHeader);
 
+
+    // Adding project member profile image
+    var aboutUsGroupImage = $('<img>');
+    aboutUsGroupImage.attr('class', 'aboutUsContentChild');
+    aboutUsGroupImage.attr('src', './assets/Images/AlanCherian.png');
+    aboutUsGroupImage.attr('style', 'width:30px; height:30px;');
+    aboutUsGroupImage.text('Alan Cherian : Developer');
+    aboutUsContentParent.append(aboutUsGroupImage);
+
     // Adding project member in apphabetical order
-    var aboutUsGroup = $('<h3>');
+    var aboutUsGroup = $('<h4>');
     aboutUsGroup.attr('class', 'aboutUsContentChild');
     aboutUsGroup.text('Alan Cherian : Developer');
     aboutUsContentParent.append(aboutUsGroup);
 
+    // Adding project member profile image
+    var aboutUsGroupImage = $('<img>');
+    aboutUsGroupImage.attr('class', 'aboutUsContentChild');
+    aboutUsGroupImage.attr('src', './assets/Images/ErinHatherell.png');
+    aboutUsGroupImage.attr('style', 'width:30px; height:30px;');
+    aboutUsGroupImage.text('Erin Hatherell : Developer');
+    aboutUsContentParent.append(aboutUsGroupImage);
+
     // Adding project member in apphabetical order
-    var aboutUsGroup = $('<h3>');
+    var aboutUsGroup = $('<h4>');
     aboutUsGroup.attr('class', 'aboutUsContentChild');
     aboutUsGroup.text('Erin Hatherell : Developer');
     aboutUsContentParent.append(aboutUsGroup);
 
+    // Adding project member profile image
+    var aboutUsGroupImage = $('<img>');
+    aboutUsGroupImage.attr('class', 'aboutUsContentChild');
+    aboutUsGroupImage.attr('src', './assets/Images/MohammedMazahim.png');
+    aboutUsGroupImage.attr('style', 'width:30px; height:30px;');
+    aboutUsGroupImage.text('Mohammed Mazahim : Developer');
+    aboutUsContentParent.append(aboutUsGroupImage);
+
     // Adding project member in apphabetical order
-    var aboutUsGroup = $('<h3>');
+    var aboutUsGroup = $('<h4>');
     aboutUsGroup.attr('class', 'aboutUsContentChild');
     aboutUsGroup.text('Mohammed Mazahim : Developer');
     aboutUsContentParent.append(aboutUsGroup);
 
+    // Adding project member profile image
+    var aboutUsGroupImage = $('<img>');
+    aboutUsGroupImage.attr('class', 'aboutUsContentChild');
+    aboutUsGroupImage.attr('src', './assets/Images/SanjeevKumar.png');
+    aboutUsGroupImage.attr('style', 'width:30px; height:30px;');
+    aboutUsGroupImage.text('Sanjeev Kumar : Developer');
+    aboutUsContentParent.append(aboutUsGroupImage);
+
     // Adding project member in apphabetical order
-    var aboutUsGroup = $('<h3>');
+    var aboutUsGroup = $('<h4>');
     aboutUsGroup.attr('class', 'aboutUsContentChild');
     aboutUsGroup.text('Sanjeev Kumar : Developer');
     aboutUsContentParent.append(aboutUsGroup);
 
+    // Adding project member in apphabetical order
+    var aboutUsWork = $('<h3>');
+    aboutUsWork.attr('class', 'aboutUsContentChild');
+    aboutUsWork.text('Work');
+    aboutUsContentParent.append(aboutUsWork);
+    
     // Adding project project description
     var aboutUsProjectDesc = $('<p>');
     aboutUsProjectDesc.attr('class', 'aboutUsContentChild');
