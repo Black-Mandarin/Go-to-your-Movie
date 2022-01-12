@@ -3,6 +3,7 @@ var inputSearch = document.querySelector("#inputSearch")
 var sButton = document.querySelector("#submitButton")
 
 var geo;
+var GeoStatus=false;
 //assigning default header
 var header=
 
@@ -14,18 +15,18 @@ var header=
     "authorization":"Basic UEVSU18xMDNfWFg6aENhaUFTY3pUVDd5",
     "territory":"XX",
      "api-version":"v200",
-     "geolocation":'-22.0;14.0',
+     "geolocation":'',
      "device-datetime":moment().format()  
 
 
 //limited call -75
 
-    //  "client":"PERS_103",
-    //  "x-api-key":"Ub09KvJlIF9GWy4qcltVZ4wM7KqV9hul3HFOleim",
-    //  "authorization":"Basic UEVSU18xMDM6OEIxVWJudGJsOHhM",
+    //  "client":"PERS_105",
+    //  "x-api-key":"4PF77SR5m599ztIgl662r1dWZ3GCCYMo42JBRmn9",
+    //  "authorization":"Basic UEVSU18xMDU6bVBaNWp2RmpMbnJi",
     //  "territory":"AU",
     //   "api-version":"v200",
-    //   "geolocation":'-38.09,145.28',
+    //   "geolocation":'',
     //   "device-datetime":moment().format()  
 
  }
@@ -34,6 +35,7 @@ var header=
     if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition((position)=>{
         geo= position.coords
+        GeoStatus=true
   
         
     });
@@ -54,11 +56,14 @@ function addressToGeoCode(city){
        response.json().then( function (data) {
       if (data !=null){
     
-      geo= data.results[0].geometry.location
-     
-    
-      
-    
+      mygeo= data.results[0].geometry.location
+
+        geo={...geo}
+        geo.latitude=mygeo.lat
+        geo.longitude=mygeo.lng
+        GeoStatus=true
+        
+              
           }   
         });
       } else {
@@ -76,11 +81,18 @@ function addressToGeoCode(city){
     function getGeo () {
   
 
-        if (geo != null) {
+        if (GeoStatus) {
           console.log('i have geo-')
     
+            cloneHeaders={...header};
+            //for real api
+            // cloneHeaders.geolocation=geo.latitude.toFixed(2).toString()+';'+geo.longitude.toFixed(2).toString()
+         
+            //for sandbox api
+                cloneHeaders.geolocation='-22.0;14.0'
+
           axios.get('https://api-gate2.movieglu.com/cinemasNearby/?n=10', {
-            headers: header
+            headers: cloneHeaders
           }).then((response)=>{
 
             response.data.cinemas.map((singledata)=>{
@@ -88,8 +100,8 @@ function addressToGeoCode(city){
                const{cinema_id,cinema_name,city}=singledata
 
               
-                axios.get('https://api-gate2.movieglu.com/cinemaShowTimes/?cinema_id='+cinema_id+'&date=2022-01-12&sort=popularity', {
-                    headers: header
+                axios.get('https://api-gate2.movieglu.com/cinemaShowTimes/?cinema_id='+cinema_id+'&date='+moment().format("YYYY-MM-DD")+'&sort=popularity', {
+                    headers: cloneHeaders
                   }).then((response)=>{
                    
                      var data={
@@ -119,6 +131,33 @@ function addressToGeoCode(city){
     
       getGeo();
 
+
+      sButton.addEventListener('click',(event)=>{
+        event.preventDefault();
+        GeoStatus=false
+        //get value from searchbox eg:-Cranbourne
+        
+    
+
+        const city=inputSearch.value
+         addressToGeoCode(city)
+        
+       
+         if (GeoStatus) {
+          console.log('i have geo-')
+    
+        } else {
+          console.log('i need to wait')
+          setTimeout(getGeo, 300); // try again in 300 milliseconds
+        }
+
+
+     
+
+
+
+    
+      })
 /////////////////////////////////////////////////////////////////////////////////////////////////codeabove mazahim
 // About Us
 
