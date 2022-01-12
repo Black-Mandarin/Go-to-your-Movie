@@ -166,19 +166,81 @@ $(document).on('click', '#aboutUs', function (event) {
 
 function aboutUsContentCreation() {
     // about US content holder appended just above footer element
-    var footer = $('footer')
+    var mainContainer = $('#mainContainer')
     var aboutUsContentParent = $('<div>');
-    aboutUsContentParent.attr('class', 'ui segment');
+    aboutUsContentParent.attr('class', 'sixteen wide column');
     aboutUsContentParent.attr('id', 'aboutUsContentParent');
     aboutUsContentParent.attr('style', 'display:none');
 
-    // aboutUsContent.text("Hello we are here.");
+    // ui segment under parent
+    
+    var aboutUsContentParentUISegment = $('<div>');
+    aboutUsContentParentUISegment.attr('class', 'ui segment');
+    aboutUsContentParent.append(aboutUsContentParentUISegment);
+    
+    
+    // grid under ui segment
+
+    var aboutUsContentParentUIGrid = $('<div>');
+    aboutUsContentParentUIGrid.attr('class', 'ui grid');
+    aboutUsContentParentUISegment.append(aboutUsContentParentUIGrid);
+
+    
+    // first column
+    var aboutUsContentParentUIGridColumnsFirst = $('<div>');
+    aboutUsContentParentUIGridColumnsFirst.attr('class', 'sixteen wide column');
+    aboutUsContentParentUIGrid.append(aboutUsContentParentUIGridColumnsFirst);
+
+    
+    // second column and further subdivision
+    var aboutUsContentParentUIGridColumnsSecond = $('<div>');
+    aboutUsContentParentUIGridColumnsSecond.attr('class', 'sixteen wide column');
+    aboutUsContentParentUIGrid.append(aboutUsContentParentUIGridColumnsSecond);
+
+    var aboutUsContentParentSecondColUISegment = $('<div>');
+    aboutUsContentParentSecondColUISegment.attr('class', 'ui segment');
+    aboutUsContentParentUIGridColumnsSecond.append(aboutUsContentParentSecondColUISegment);
+
+    var aboutUsContentParentSecondColUIGrid = $('<div>');
+    aboutUsContentParentSecondColUIGrid.attr('class', 'ui grid');
+    aboutUsContentParentSecondColUISegment.append(aboutUsContentParentSecondColUIGrid);
+
+    var aboutUsContentParentSecondColSubCol1 = $('<div>');
+    aboutUsContentParentSecondColSubCol1.attr('class', 'four wide column');
+    aboutUsContentParentSecondColUIGrid.append(aboutUsContentParentSecondColSubCol1);
+
+    var aboutUsContentParentSecondColSubCol2 = $('<div>');
+    aboutUsContentParentSecondColSubCol2.attr('class', 'four wide column');
+    aboutUsContentParentSecondColUIGrid.append(aboutUsContentParentSecondColSubCol2);
+
+    var aboutUsContentParentSecondColSubCol3 = $('<div>');
+    aboutUsContentParentSecondColSubCol3.attr('class', 'four wide column');
+    aboutUsContentParentSecondColUIGrid.append(aboutUsContentParentSecondColSubCol3);
+
+    var aboutUsContentParentSecondColSubCol4 = $('<div>');
+    aboutUsContentParentSecondColSubCol4.attr('class', 'four wide column');
+    aboutUsContentParentSecondColUIGrid.append(aboutUsContentParentSecondColSubCol4);
+
+
+    // third column
+    
+    var aboutUsContentParentUIGridColumnsThird = $('<div>');
+    aboutUsContentParentUIGridColumnsThird.attr('class', 'sixteen wide column');
+    aboutUsContentParentUIGrid.append(aboutUsContentParentUIGridColumnsThird);
+
+    // fourth column
+    
+    var aboutUsContentParentUIGridColumnsFourth = $('<div>');
+    aboutUsContentParentUIGridColumnsFourth.attr('class', 'sixteen wide column');
+    aboutUsContentParentUIGrid.append(aboutUsContentParentUIGridColumnsFourth);
+
+    
 
     // Adding Header for About US
     var aboutUsHeader = $('h1');
     aboutUsHeader.attr('class', 'aboutUsContentChild');
     aboutUsHeader.text('Project : Go to your Movie');
-    aboutUsContentParent.append(aboutUsHeader);
+    aboutUsContentParentUIGridColumnsFirst.append(aboutUsHeader);
 
 
     // Adding project member profile image
@@ -187,13 +249,13 @@ function aboutUsContentCreation() {
     aboutUsGroupImage.attr('src', './assets/Images/AlanCherian.png');
     aboutUsGroupImage.attr('style', 'width:30px; height:30px; border-radius: 50%;');
     aboutUsGroupImage.attr('alt','Alan Cherian : Developer');
-    aboutUsContentParent.append(aboutUsGroupImage);
+    aboutUsContentParentSecondColSubCol1.append(aboutUsGroupImage);
 
     // Adding project member in apphabetical order
     var aboutUsGroup = $('<h4>');
     aboutUsGroup.attr('class', 'aboutUsContentChild');
     aboutUsGroup.text('Alan Cherian : Developer');
-    aboutUsContentParent.append(aboutUsGroup);
+    aboutUsContentParentSecondColSubCol1.append(aboutUsGroup);
 
     // Adding project member profile image
     var aboutUsGroupImage = $('<img>');
@@ -201,13 +263,13 @@ function aboutUsContentCreation() {
     aboutUsGroupImage.attr('src', './assets/Images/ErinHatherell.png');
     aboutUsGroupImage.attr('style', 'width:30px; height:30px; border-radius: 50%;');
     aboutUsGroupImage.attr('alt', 'Hatherell : Developer');
-    aboutUsContentParent.append(aboutUsGroupImage);
+    aboutUsContentParentSecondColSubCol2.append(aboutUsGroupImage);
 
     // Adding project member in apphabetical order
     var aboutUsGroup = $('<h4>');
     aboutUsGroup.attr('class', 'aboutUsContentChild');
     aboutUsGroup.text('Erin Hatherell : Developer');
-    aboutUsContentParent.append(aboutUsGroup);
+    aboutUsContentParentSecondColSubCol2.append(aboutUsGroup);
 
     // Adding project member profile image
     var aboutUsGroupImage = $('<img>');
@@ -215,13 +277,13 @@ function aboutUsContentCreation() {
     aboutUsGroupImage.attr('src', './assets/Images/MohammedMazahim.png');
     aboutUsGroupImage.attr('style', 'width:30px; height:30px; border-radius: 50%;');
     aboutUsGroupImage.attr('alt', 'Mohammed Mazahim : Developer');
-    aboutUsContentParent.append(aboutUsGroupImage);
+    aboutUsContentParentSecondColSubCol3.append(aboutUsGroupImage);
 
     // Adding project member in apphabetical order
     var aboutUsGroup = $('<h4>');
     aboutUsGroup.attr('class', 'aboutUsContentChild');
     aboutUsGroup.text('Mohammed Mazahim : Developer');
-    aboutUsContentParent.append(aboutUsGroup);
+    aboutUsContentParentSecondColSubCol3.append(aboutUsGroup);
 
     // Adding project member profile image
     var aboutUsGroupImage = $('<img>');
@@ -229,38 +291,38 @@ function aboutUsContentCreation() {
     aboutUsGroupImage.attr('src', './assets/Images/SanjeevKumar.png');
     aboutUsGroupImage.attr('style', 'width:30px; height:30px; border-radius: 50%;');
     aboutUsGroupImage.attr('alt', 'Sanjeev Kumar : Developer');
-    aboutUsContentParent.append(aboutUsGroupImage);
+    aboutUsContentParentSecondColSubCol4.append(aboutUsGroupImage);
 
     // Adding project member in apphabetical order
     var aboutUsGroup = $('<h4>');
     aboutUsGroup.attr('class', 'aboutUsContentChild');
     aboutUsGroup.text('Sanjeev Kumar : Developer');
-    aboutUsContentParent.append(aboutUsGroup);
+    aboutUsContentParentSecondColSubCol4.append(aboutUsGroup);
 
     // Adding project member in apphabetical order
     var aboutUsWork = $('<h3>');
     aboutUsWork.attr('class', 'aboutUsContentChild');
     aboutUsWork.text('Work');
-    aboutUsContentParent.append(aboutUsWork);
+    aboutUsContentParentUIGridColumnsThird.append(aboutUsWork);
 
     // Adding project project description
     var aboutUsProjectDesc = $('<p>');
     aboutUsProjectDesc.attr('class', 'aboutUsContentChild');
     aboutUsProjectDesc.text('We are group of four developers collaborating on project "Go to your Movies". We intend to make end user life simple by providing a web application which takes minimum input and help him/her go its favourite movie to its nearest choice of theatre.');
-    aboutUsContentParent.append(aboutUsProjectDesc);
+    aboutUsContentParentUIGridColumnsThird.append(aboutUsProjectDesc);
 
     // Adding project project appliaction URL and Repository URL 
     var aboutUsProjectRepositoryURL = $('<a>');
     aboutUsProjectRepositoryURL.attr('class', 'aboutUsContentChild');
     aboutUsProjectRepositoryURL.attr('href', 'https://github.com/Black-Mandarin/Go-to-your-Movie');
     aboutUsProjectRepositoryURL.text('Repository URL');
-    aboutUsContentParent.append(aboutUsProjectRepositoryURL);
+    aboutUsContentParentUIGridColumnsFourth.append(aboutUsProjectRepositoryURL);
 
-    footer.before(aboutUsContentParent);
+    mainContainer.append(aboutUsContentParent);
 };
 
 
-// Create time scheduler on the fly at when initial page load finished. 
+// Create about us content on fly
 $(document).ready(function (event) {
     aboutUsContentCreation();
 });
