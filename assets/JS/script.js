@@ -1,161 +1,164 @@
 var search = document.querySelector("#search")
 var inputSearch = document.querySelector("#inputSearch")
 var sButton = document.querySelector("#submitButton")
-var currentGeo;
-var currentCity;
+
 var geo;
-var headerL;
-getGeoLocation()
-
-function getCurrentCity() {
-
-
-    if (currentCity != null) {
-        console.log('i have city-' + currentCity + 'with GEO ' + geo.latitude + ',' + geo.longitude)
-
-        const propertyNames = Object.keys(geo);
-        console.log(propertyNames);
-        let localGeo = propertyNames.toString();
-
-        headerL = {
-            "client": "PERS_103",
-            "x-api-key": "0hUVmKVwTG63JE1aEUUht6QGZ41W9noO63yBEMIA",
-            "authorization": "Basic UEVSU18xMDNfWFg6aENhaUFTY3pUVDd5",
-            "territory": "XX",
-            "api-version": "v200",
-            "geolocation": '-38.09,145.28',
-            "device-datetime": moment().format()
+var GeoStatus=false;
+//assigning default header
+var header=
 
 
-            //limited call -75
+ {
 
-            //   "client":"PERS_103",
-            //   "x-api-key":"Ub09KvJlIF9GWy4qcltVZ4wM7KqV9hul3HFOleim",
-            //   "authorization":"Basic UEVSU18xMDM6OEIxVWJudGJsOHhM",
-            //   "territory":"AU",
-            //    "api-version":"v200",
-            //    "geolocation":'-38.09,145.28',
-            //    "device-datetime":moment().format()  
+    "client":"PERS_103",
+    "x-api-key":"0hUVmKVwTG63JE1aEUUht6QGZ41W9noO63yBEMIA",
+    "authorization":"Basic UEVSU18xMDNfWFg6aENhaUFTY3pUVDd5",
+    "territory":"XX",
+     "api-version":"v200",
+     "geolocation":'',
+     "device-datetime":moment().format()  
 
+
+//limited call -75
+
+    //  "client":"PERS_105",
+    //  "x-api-key":"4PF77SR5m599ztIgl662r1dWZ3GCCYMo42JBRmn9",
+    //  "authorization":"Basic UEVSU18xMDU6bVBaNWp2RmpMbnJi",
+    //  "territory":"AU",
+    //   "api-version":"v200",
+    //   "geolocation":'',
+    //   "device-datetime":moment().format()  
+
+ }
+
+ function getGeoLocationByDefault(){
+    if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition((position)=>{
+        geo= position.coords
+        GeoStatus=true
+  
+        
+    });
+  } else { 
+   alert("Geolocation is not supported by this browser."); 
+  }
+}
+
+//call method
+getGeoLocationByDefault()
+
+
+function addressToGeoCode(city){
+    var url ='https://maps.googleapis.com/maps/api/geocode/json?address='+city+'&key=AIzaSyBi2s5puIfi0U5S0NRdR4NiprHdtQf2JFA'
+    fetch(url)
+    .then(function (response) {
+      if (response.ok) {
+       response.json().then( function (data) {
+      if (data !=null){
+    
+      mygeo= data.results[0].geometry.location
+
+        geo={...geo}
+        geo.latitude=mygeo.lat
+        geo.longitude=mygeo.lng
+        GeoStatus=true
+        
+              
+          }   
+        });
+      } else {
+        alert('Error: ' + response.statusText);
+      }
+    })
+    .catch(function (error) {
+      alert('Unable to connect to google API');
+    });
+    
+    
+     
+    }
+
+    function getGeo () {
+  
+
+        if (GeoStatus) {
+          console.log('i have geo-')
+    
+            cloneHeaders={...header};
+            //for real api
+            // cloneHeaders.geolocation=geo.latitude.toFixed(2).toString()+';'+geo.longitude.toFixed(2).toString()
+         
+            //for sandbox api
+                cloneHeaders.geolocation='-22.0;14.0'
+
+          axios.get('https://api-gate2.movieglu.com/cinemasNearby/?n=10', {
+            headers: cloneHeaders
+          }).then((response)=>{
+
+            response.data.cinemas.map((singledata)=>{
+
+               const{cinema_id,cinema_name,city}=singledata
+
+              
+                axios.get('https://api-gate2.movieglu.com/cinemaShowTimes/?cinema_id='+cinema_id+'&date='+moment().format("YYYY-MM-DD")+'&sort=popularity', {
+                    headers: cloneHeaders
+                  }).then((response)=>{
+                   
+                     var data={
+                        cinema_name:cinema_name,
+                        films:response.data.films
+
+                     }
+                     console.log(data)
+                   
+                  })
+
+            })
+              
+
+
+          
+           
+          })
+          //////////////////////
+
+        } else {
+          console.log('i need to wait')
+          setTimeout(getGeo, 300); // try again in 300 milliseconds
+        }
+      }
+    
+    
+      getGeo();
+
+
+      sButton.addEventListener('click',(event)=>{
+        event.preventDefault();
+        GeoStatus=false
+        //get value from searchbox eg:-Cranbourne
+        
+    
+
+        const city=inputSearch.value
+         addressToGeoCode(city)
+        
+       
+         if (GeoStatus) {
+          console.log('i have geo-')
+    
+        } else {
+          console.log('i need to wait')
+          setTimeout(getGeo, 300); // try again in 300 milliseconds
         }
 
-        apiCall('Raiders of the Lost Ark')
 
-    } else {
-        console.log('i need to wait')
-        setTimeout(getCurrentCity, 300); // try again in 300 milliseconds
-    }
-}
-
-getCurrentCity();
-
-function getGeoLocation() {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition((position) => {
-            geo = position.coords
-            geoToAddress(position.coords.latitude, position.coords.longitude)
-
-        });
-    } else {
-        alert("Geolocation is not supported by this browser.");
-    }
-}
-
-function geoToAddress(lat, lon) {
-
-    var url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + lon + '&key=AIzaSyBi2s5puIfi0U5S0NRdR4NiprHdtQf2JFA'
-    const fetchme = fetch(url)
-        .then(function (response) {
-            if (response.ok) {
-                response.json().then(function (data) {
-                    if (data != null) {
-
-                        for (var i = 0; i < data.results[0].address_components.length; i++) {
-                            for (var b = 0; b < data.results[0].address_components[i].types.length; b++) {
-
-                                if (data.results[0].address_components[i].types[b] == "locality") {
-                                    //this is the object you are looking for 
-                                    city = data.results[0].address_components[i];
-
-                                    break;
-                                }
-
-                            }
-                        }
-
-                        currentCity = city.long_name
-
-                    }
-                });
-            } else {
-                alert('Error: ' + response.statusText);
-            }
-        })
-        .catch(function (error) {
-            alert('Unable to connect to google API');
-        });
-
-
-}
-
-//this function is to fet feo codes from address
-function addressToGeoCode(city) {
-    var url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + city + '&key=AIzaSyBi2s5puIfi0U5S0NRdR4NiprHdtQf2JFA'
-    fetch(url)
-        .then(function (response) {
-            if (response.ok) {
-                response.json().then(function (data) {
-                    if (data != null) {
-
-                        geo = data.results[0].geometry.location
+     
 
 
 
-
-                    }
-                });
-            } else {
-                alert('Error: ' + response.statusText);
-            }
-        })
-        .catch(function (error) {
-            alert('Unable to connect to google API');
-        });
-
-}
-
-//first call to get film id
-
-//https://api-gate2.movieglu.com/filmLiveSearch/?query=Raiders+of+the+Lost+Ark&n=6
-
-
-//second call to get show time nearby(required film id from previous call)
-//https://api-gate2.movieglu.com/filmShowTimes/?film_id=7772&date=2022-01-11&n=10
-
-
-function apiCall(movieName) {
-
-    axios.get('https://api-gate2.movieglu.com/filmLiveSearch/?query=' + movieName + '&n=10', {
-        headers: headerL
-    }).then((response) => {
-
-        const { film_id, film_name } = response.data.films[0]
-        console.log(response.data)
-        console.log(film_id + '-' + film_name)
-        // axios.get('https://api-gate2.movieglu.com/filmShowTimes/?film_id='+film_id+'&date='+moment().format("YYYY-MM-DD")+'&n=10',{headers:headerL}).then((response)=>{
-        //         console.log(response.data)
-        // }).catch()
-
-    })
-
-}
-
-sButton.addEventListener('click', (event) => {
-
-    event.preventDefault()
-    apiCall(inputSearch.value.replaceAll(" ", '+'))
-})
-
+    
+      })
+/////////////////////////////////////////////////////////////////////////////////////////////////codeabove mazahim
 // About Us
 
 $(document).on('click', '#aboutUs', function (event) {
