@@ -136,15 +136,71 @@ getGeo();
 // display list of cinemas with short address 
 function displayListOfCinemasNearMe() {
 
-    // listItem.attr('style', 'color:black');
+    $('#listOfCinemas').empty();
     listOfCinemasNearMe.forEach(function (element) {
         var listItem = $('<li>');
+        listItem.attr('class', 'eachCinemas');
+        listItem.attr('id', element.cinema_id);
+        listItem.attr('name', element.cinema_name);
         listItem.attr('style', 'color:black');
         listItem.text(element.cinema_name + ' : ' + element.address);
         $('#listOfCinemas').append(listItem);
     });
 
 }
+
+var targetContent;
+
+$(document).on('click', '.eachCinemas', function (event) {
+    event.preventDefault();
+    console.log(targetContent);
+    displaylistOfFilmsRunningNow(event.target.getAttribute('name'));
+});
+
+function displaylistOfFilmsRunningNow(cinemaName) {
+    
+    $('#listOfFilms').empty();
+    listOfRunningFilmsInCinema.forEach(function (element) {
+        if (element.cinema_name === cinemaName) {
+            element.films.forEach(function (film) {
+                console.log(element.films);
+                var card = $('<div>');
+                card.attr('class', 'card');
+
+                var image = $('<div>');
+                image.attr('class', 'image');
+                var imageTag = $('<img>');
+                // console.log(film.images.still['1'].medium.film_image);
+                imageTag.attr('src', film.images.poster["1"].medium.film_image);
+                image.append(imageTag);
+                card.append(image);
+
+                var content = $('<div>');
+                content.attr('class', 'content');
+                var filmName = $('<div>');
+                filmName.attr('class', 'center aligned header');
+                filmName.text(film.film_name);
+                content.append(filmName);
+                var filmDesc = $('<div>');
+                filmDesc.attr('class', 'description');
+                filmDesc.text(film.film_name);
+                content.append(filmDesc);
+                card.append(content);
+
+                var extra_content = $('<div>');
+                extra_content.attr('class', 'extra content');
+                var filmReleaseYear = $('<span>');
+                filmReleaseYear.attr('class', 'right floated');
+                filmReleaseYear.text('Release Year 2022');
+                extra_content.append(filmReleaseYear);
+                card.append(extra_content);
+                $('#listOfFilms').append(card);
+            });
+        }
+    });
+
+}
+
 
 
 sButton.addEventListener('click', (event) => {
