@@ -1,25 +1,28 @@
 var search = document.querySelector("#search")
 var inputSearch = document.querySelector("#inputSearch")
 var sButton = document.querySelector("#submitButton")
+var listOfCinemasNearMe;
+var listOfRunningFilmsInCinema = [];
+
 
 var geo;
-var GeoStatus=false;
+var GeoStatus = false;
 //assigning default header
-var header=
+var header =
 
 
- {
+{
 
-    "client":"PERS_103",
-    "x-api-key":"0hUVmKVwTG63JE1aEUUht6QGZ41W9noO63yBEMIA",
-    "authorization":"Basic UEVSU18xMDNfWFg6aENhaUFTY3pUVDd5",
-    "territory":"XX",
-     "api-version":"v200",
-     "geolocation":'',
-     "device-datetime":moment().format()  
+    "client": "PERS_103",
+    "x-api-key": "0hUVmKVwTG63JE1aEUUht6QGZ41W9noO63yBEMIA",
+    "authorization": "Basic UEVSU18xMDNfWFg6aENhaUFTY3pUVDd5",
+    "territory": "XX",
+    "api-version": "v200",
+    "geolocation": '',
+    "device-datetime": moment().format()
 
 
-//limited call -75
+    //limited call -75
 
     //  "client":"PERS_105",
     //  "x-api-key":"4PF77SR5m599ztIgl662r1dWZ3GCCYMo42JBRmn9",
@@ -29,135 +32,147 @@ var header=
     //   "geolocation":'',
     //   "device-datetime":moment().format()  
 
- }
+}
 
- function getGeoLocationByDefault(){
+function getGeoLocationByDefault() {
     if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition((position)=>{
-        geo= position.coords
-        GeoStatus=true
-  
-        
-    });
-  } else { 
-   alert("Geolocation is not supported by this browser."); 
-  }
+        navigator.geolocation.getCurrentPosition((position) => {
+            geo = position.coords
+            GeoStatus = true
+
+
+        });
+    } else {
+        alert("Geolocation is not supported by this browser.");
+    }
 }
 
 //call method
 getGeoLocationByDefault()
 
 
-function addressToGeoCode(city){
-    var url ='https://maps.googleapis.com/maps/api/geocode/json?address='+city+'&key=AIzaSyBi2s5puIfi0U5S0NRdR4NiprHdtQf2JFA'
+function addressToGeoCode(city) {
+    var url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + city + '&key=AIzaSyBi2s5puIfi0U5S0NRdR4NiprHdtQf2JFA'
     fetch(url)
-    .then(function (response) {
-      if (response.ok) {
-       response.json().then( function (data) {
-      if (data !=null){
-    
-      mygeo= data.results[0].geometry.location
+        .then(function (response) {
+            if (response.ok) {
+                response.json().then(function (data) {
+                    if (data != null) {
 
-        geo={...geo}
-        geo.latitude=mygeo.lat
-        geo.longitude=mygeo.lng
-        GeoStatus=true
-        
-              
-          }   
+                        mygeo = data.results[0].geometry.location
+
+                        geo = { ...geo }
+                        geo.latitude = mygeo.lat
+                        geo.longitude = mygeo.lng
+                        GeoStatus = true
+
+
+                    }
+                });
+            } else {
+                alert('Error: ' + response.statusText);
+            }
+        })
+        .catch(function (error) {
+            alert('Unable to connect to google API');
         });
-      } else {
-        alert('Error: ' + response.statusText);
-      }
-    })
-    .catch(function (error) {
-      alert('Unable to connect to google API');
-    });
-    
-    
-     
-    }
 
-    function getGeo () {
-  
 
-        if (GeoStatus) {
-          console.log('i have geo-')
-    
-            cloneHeaders={...header};
-            //for real api
-            // cloneHeaders.geolocation=geo.latitude.toFixed(2).toString()+';'+geo.longitude.toFixed(2).toString()
-         
-            //for sandbox api
-                cloneHeaders.geolocation='-22.0;14.0'
 
-          axios.get('https://api-gate2.movieglu.com/cinemasNearby/?n=10', {
+}
+
+function getGeo() {
+
+
+    if (GeoStatus) {
+        console.log('i have geo-')
+
+        cloneHeaders = { ...header };
+        //for real api
+        // cloneHeaders.geolocation=geo.latitude.toFixed(2).toString()+';'+geo.longitude.toFixed(2).toString()
+
+        //for sandbox api
+        cloneHeaders.geolocation = '-22.0;14.0'
+
+        axios.get('https://api-gate2.movieglu.com/cinemasNearby/?n=10', {
             headers: cloneHeaders
-          }).then((response)=>{
+        }).then((response) => {
+            listOfCinemasNearMe = response.data.cinemas;
 
-            response.data.cinemas.map((singledata)=>{
+            response.data.cinemas.map((singledata) => {
 
-               const{cinema_id,cinema_name,city}=singledata
+                const { cinema_id, cinema_name, city } = singledata
 
-              
-                axios.get('https://api-gate2.movieglu.com/cinemaShowTimes/?cinema_id='+cinema_id+'&date='+moment().format("YYYY-MM-DD")+'&sort=popularity', {
+                axios.get('https://api-gate2.movieglu.com/cinemaShowTimes/?cinema_id=' + cinema_id + '&date=' + moment().format("YYYY-MM-DD") + '&sort=popularity', {
                     headers: cloneHeaders
-                  }).then((response)=>{
-                   
-                     var data={
-                        cinema_name:cinema_name,
-                        films:response.data.films
+                }).then((response) => {
 
-                     }
-                     console.log(data)
-                   
-                  })
+                    var data = {
+                        cinema_name: cinema_name,
+                        films: response.data.films
+
+                    }
+                    listOfRunningFilmsInCinema.push(data);
+                    console.log(data);
+                })
 
             })
-              
+            console.log(listOfCinemasNearMe, listOfRunningFilmsInCinema);
+            displayListOfCinemasNearMe();
 
 
-          
-           
-          })
-          //////////////////////
+        })
+        //////////////////////
 
-        } else {
-          console.log('i need to wait')
-          setTimeout(getGeo, 300); // try again in 300 milliseconds
-        }
-      }
-    
-    
-      getGeo();
+    } else {
+        console.log('i need to wait')
+        setTimeout(getGeo, 300); // try again in 300 milliseconds
+    }
+}
 
 
-      sButton.addEventListener('click',(event)=>{
-        event.preventDefault();
-        GeoStatus=false
-        //get value from searchbox eg:-Cranbourne
-        
-    
+getGeo();
 
-        const city=inputSearch.value
-         addressToGeoCode(city)
-        
-       
-         if (GeoStatus) {
-          console.log('i have geo-')
-    
-        } else {
-          console.log('i need to wait')
-          setTimeout(getGeo, 300); // try again in 300 milliseconds
-        }
+// display list of cinemas with short address 
+function displayListOfCinemasNearMe() {
+
+    // listItem.attr('style', 'color:black');
+    listOfCinemasNearMe.forEach(function (element) {
+        var listItem = $('<li>');
+        listItem.attr('style', 'color:black');
+        listItem.text(element.cinema_name + ' : ' + element.address);
+        $('#listOfCinemas').append(listItem);
+    });
+
+}
 
 
-     
+sButton.addEventListener('click', (event) => {
+    event.preventDefault();
+    GeoStatus = false
+    //get value from searchbox eg:-Cranbourne
 
 
 
-    
-      })
+    const city = inputSearch.value
+    addressToGeoCode(city)
+
+
+    if (GeoStatus) {
+        console.log('i have geo-')
+
+    } else {
+        console.log('i need to wait')
+        setTimeout(getGeo, 300); // try again in 300 milliseconds
+    }
+
+
+
+
+
+
+
+})
 /////////////////////////////////////////////////////////////////////////////////////////////////codeabove mazahim
 // About Us
 
@@ -176,25 +191,25 @@ function aboutUsContentCreation() {
     aboutUsContentParent.attr('style', 'display:none');
 
     // ui segment under parent
-    
+
     var aboutUsContentParentUISegment = $('<div>');
     aboutUsContentParentUISegment.attr('class', 'ui segment');
     aboutUsContentParent.append(aboutUsContentParentUISegment);
-    
-    
+
+
     // grid under ui segment
 
     var aboutUsContentParentUIGrid = $('<div>');
     aboutUsContentParentUIGrid.attr('class', 'ui grid');
     aboutUsContentParentUISegment.append(aboutUsContentParentUIGrid);
 
-    
+
     // first column
     var aboutUsContentParentUIGridColumnsFirst = $('<div>');
     aboutUsContentParentUIGridColumnsFirst.attr('class', 'sixteen wide column');
     aboutUsContentParentUIGrid.append(aboutUsContentParentUIGridColumnsFirst);
 
-    
+
     // second column and further subdivision
     var aboutUsContentParentUIGridColumnsSecond = $('<div>');
     aboutUsContentParentUIGridColumnsSecond.attr('class', 'sixteen wide column');
@@ -226,18 +241,18 @@ function aboutUsContentCreation() {
 
 
     // third column
-    
+
     var aboutUsContentParentUIGridColumnsThird = $('<div>');
     aboutUsContentParentUIGridColumnsThird.attr('class', 'sixteen wide column');
     aboutUsContentParentUIGrid.append(aboutUsContentParentUIGridColumnsThird);
 
     // fourth column
-    
+
     var aboutUsContentParentUIGridColumnsFourth = $('<div>');
     aboutUsContentParentUIGridColumnsFourth.attr('class', 'sixteen wide column');
     aboutUsContentParentUIGrid.append(aboutUsContentParentUIGridColumnsFourth);
 
-    
+
 
     // Adding Header for About US
     var aboutUsHeader = $('h1');
@@ -251,7 +266,7 @@ function aboutUsContentCreation() {
     aboutUsGroupImage.attr('class', 'aboutUsContentChild');
     aboutUsGroupImage.attr('src', './assets/Images/AlanCherian.png');
     aboutUsGroupImage.attr('style', 'width:30px; height:30px; border-radius: 50%;');
-    aboutUsGroupImage.attr('alt','Alan Cherian : Developer');
+    aboutUsGroupImage.attr('alt', 'Alan Cherian : Developer');
     aboutUsContentParentSecondColSubCol1.append(aboutUsGroupImage);
 
     // Adding project member in apphabetical order
