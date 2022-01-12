@@ -1,9 +1,12 @@
 var search = document.querySelector("#search")
 var inputSearch = document.querySelector("#inputSearch")
 var sButton = document.querySelector("#submitButton")
+var cinemaList = document.querySelector("#cinemalist")
+var parentDiv = document.querySelector("#parentDiv")
 
 var geo;
 var GeoStatus=false;
+var firstClick=true;
 //assigning default header
 var header=
 
@@ -99,25 +102,40 @@ function addressToGeoCode(city){
 
                const{cinema_id,cinema_name,city}=singledata
 
-              
+
+               const li=document.createElement('li')
+               cinemaList.appendChild(li)
+               li.innerText=cinema_name
+               li.setAttribute('style','color:black; mouse')
+            
+              li.addEventListener('click',(event)=>{
+                  
                 axios.get('https://api-gate2.movieglu.com/cinemaShowTimes/?cinema_id='+cinema_id+'&date='+moment().format("YYYY-MM-DD")+'&sort=popularity', {
-                    headers: cloneHeaders
-                  }).then((response)=>{
-                   
-                     var data={
-                        cinema_name:cinema_name,
-                        films:response.data.films
+                  headers: cloneHeaders
+                }).then((response)=>{
+                 const filmsArray= response.data.films
+                 console.log(filmsArray)
+                  //createMovieElement(src,filmName,Mdescription,year)
+                 filmsArray.forEach(element => {
 
-                     }
-                     console.log(data)
-                   
-                  })
+                    //required some work to get url
+                    const obj =element.images.poster
+                    const obj1 =element.images.poster[Object.keys(obj)]
+                    const url=obj1.medium.film_image
 
+                   
+                    //remove previous elements
+                   createMovieElement(url,element.film_name,'description','2022')
+                   
+                
+                    
+                  });
+ 
+                })
+
+              })
+            
             })
-              
-
-
-          
            
           })
           //////////////////////
@@ -158,6 +176,78 @@ function addressToGeoCode(city){
 
     
       })
+
+
+
+function createMovieElement(src,filmName,Mdescription,year){
+
+//   const cards =document.querySelectorAll(".card")
+// if(cards.length > 0){
+//   Array.prototype.forEach.call(cards,(node)=>{
+//     node.parentNode.removeChild( node );
+//   })
+// }
+
+
+
+
+//   <!-- <div class="card">
+const outerDiv=document.createElement('div')
+outerDiv.classList.add('card')
+parentDiv.appendChild(outerDiv)
+
+
+//   <div class="image">
+const image=document.createElement('div')
+outerDiv.classList.add('image')
+outerDiv.appendChild(image)
+
+const img=document.createElement('img')
+image.appendChild(img)
+img.src=src
+
+//     <img src="/images/avatar2/large/matthew.png">
+//   </div>
+
+//   <div class="content">
+
+const content=document.createElement('div')
+outerDiv.classList.add('content')
+outerDiv.appendChild(content)
+//     <div class="center aligned header">Iron Man 3</div>
+
+const center_aligned_header=document.createElement('div')
+center_aligned_header.classList.add("center","aligned","header")
+content.appendChild(center_aligned_header)
+center_aligned_header.textContent=filmName
+center_aligned_header.setAttribute('style','color:black;')
+//       <div class="description">
+
+const description=document.createElement('div')
+description.classList.add("description")
+content.appendChild(description)
+description.textContent=Mdescription
+//       Movie Details will be Displayed Here
+//     </div>
+//   </div>
+//   <div class="extra content">
+
+const extra_content=document.createElement('div')
+extra_content.classList.add("extra","content")
+outerDiv.appendChild(extra_content)
+//     <span class="right floated">
+const span=document.createElement('span')
+span.classList.add("right" ,"floated")
+extra_content.appendChild(span)
+span.textContent='Release Year '+year
+//       Release Year 2014
+//     </span>                      
+//   </div>
+// </div> -->
+
+}
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////codeabove mazahim
 // About Us
 
