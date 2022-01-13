@@ -9,7 +9,7 @@ var listOfRunningFilmsInCinema = [];
 var locationForm = document.getElementById("location-input");
 var locationInput = document.getElementById("inputSearch");
 var locationSubmit = document.getElementById("submitButton");
-var locations = document.getElementById("locations");
+var locationStorage = document.getElementById("locations");
 // End of Erin's code - location list
 
 
@@ -21,7 +21,7 @@ var header =
 
 // Erin's code - location list
 // Save existing notes
-let locationStorage = localStorage.getItem("locations")
+let locationStorage = localStorage.getItem("locations");
     ? JSON.parse(localStorage.getItem("locations"))
     : [];
 // Save new location when the form is submitted
@@ -36,7 +36,7 @@ locationForm.addEventListener("submit", (e) => {
 const listBuilder = (text) => {
     const location = document.createElement("li");
     location.innerHTML = text + ' <button onclick="deleteLocation(this)">x</button>';
-    locations.appendChild(note);
+    locationStorage.appendChild(note);
 };
 // Retrieves previous searches when page refreshed
 const getLocations = JSON.parse(localStorage.getItem("locations"));
