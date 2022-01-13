@@ -3,9 +3,13 @@ var inputSearch = document.querySelector("#inputSearch")
 var sButton = document.querySelector("#submitButton")
 var listOfCinemasNearMe;
 var listOfRunningFilmsInCinema = [];
+
 // Erin's code - location list
-var usersSearchListGroupEl = document.querySelector(".prev-search");
-var existingEntries = JSON.parse(localStorage.getItem("locations"));
+//Declaration of HTML variables
+var locationForm = document.getElementById("location-input");
+var locationInput = document.getElementById("inputSearch");
+var locationSubmit = document.getElementById("submitButton");
+var locations = document.getElementById("locations");
 // End of Erin's code - location list
 
 
@@ -14,17 +18,41 @@ var GeoStatus = false;
 //assigning default header
 var header =
 
+
 // Erin's code - location list
-window.onload = function initializeDashboard() {
-    // Generating locally saved location list
-    if (localStorage.getItem("locations") !== null) {
-      for (var i = 0; i < existingEntries.length; i++) {
-        // Buttons for previous location listings
-        createNewLocationButton(existingEntries[i], usersSearchListGroupEl);
-    }
-  }
-}
+// Save existing notes
+let locationStorage = localStorage.getItem("locations")
+    ? JSON.parse(localStorage.getItem("locations"))
+    : [];
+// Save new location when the form is submitted
+locationForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    locationStorage.push(locationInput.value);
+    localStorage.setItem("locations", JSON.stringify(locationStorage));
+    listBuilder(locationInput.value);
+    locationInput.value = "";
+});
+// Adds note to list
+const listBuilder = (text) => {
+    const location = document.createElement("li");
+    location.innerHTML = text + ' <button onclick="deleteLocation(this)">x</button>';
+    locations.appendChild(note);
+};
+// Retrieves previous searches when page refreshed
+const getLocations = JSON.parse(localStorage.getItem("locations"));
+getNotes.forEach((location) => {
+    listBuilder(location);
+});
+// Addition of delete button
+const deleteLocation = (btn) => {
+    let el = btn.parentNode;
+    const index = [...el.parentElement.children].indexOf(el);
+    locationStorage.splice(index, 1);
+    localStorage.setItem("notes", JSON.stringify(locationStorage));
+    el.remove();
+  };
 // End of Erin's code - location list
+
 
 {
 
@@ -218,6 +246,8 @@ function displaylistOfFilmsRunningNow(cinemaName) {
 
 
 
+
+
 sButton.addEventListener('click', (event) => {
     event.preventDefault();
     GeoStatus = false
@@ -237,33 +267,8 @@ sButton.addEventListener('click', (event) => {
         setTimeout(getGeo, 300); // try again in 300 milliseconds
     }
 
-
-
-
-
-
-
 })
 
-// Erin's code - location list
-// Add search location to previously searched locations list
-function createNewLocationButton(locationName, location) {
-    var locationBtnEl = document.createElement("button");
-    locationBtnEl.setAttribute("type", "button");
-    locationBtnEl.classList.add("button", "list-group-item");
-    locationBtnEl.textContent = locationName;
-    locationBtnEl.setAttribute("value", locationName);
-    location.prepend(locationBtnEl);
-    locationBtnEl.addEventListener("click", function () {
-      var allLocationBtns = document.querySelectorAll(".list-group-item");
-      for (var i = 0; i < allLocationBtns.length; i++) {
-        allLocationBtns[i].classList.remove("active");
-      }
-      addressToGeoCode(city)(locationBtnEl.value);
-      locationBtnEl.classList.add("active");
-    });
-  }
-// End of Erin's code - location list
 
 /////////////////////////////////////////////////////////////////////////////////////////////////codeabove mazahim
 // About Us
