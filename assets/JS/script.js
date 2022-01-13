@@ -24,9 +24,9 @@ var header =
 
     //limited call -75
 
-    //  "client":"PERS_105",
-    //  "x-api-key":"4PF77SR5m599ztIgl662r1dWZ3GCCYMo42JBRmn9",
-    //  "authorization":"Basic UEVSU18xMDU6bVBaNWp2RmpMbnJi",
+    //  "client":"MONA_5",
+    //  "x-api-key":"yPMmst0g973ITePN2iYQc5ka9vhVNFbxakarWB1o",
+    //  "authorization":"Basic TU9OQV81OkoybjNPVGtmaWZQcw==",
     //  "territory":"AU",
     //   "api-version":"v200",
     //   "geolocation":'',
@@ -154,6 +154,8 @@ $(document).on('click', '.eachCinemas', function (event) {
     displaylistOfFilmsRunningNow(event.target.getAttribute('name'));
 });
 
+// display list of running films as per selected cinemas 
+
 function displaylistOfFilmsRunningNow(cinemaName) {
     
     $('#listOfFilms').empty();
@@ -228,15 +230,30 @@ sButton.addEventListener('click', (event) => {
 /////////////////////////////////////////////////////////////////////////////////////////////////codeabove mazahim
 // About Us
 
+// about us display container
+
 $(document).on('click', '#aboutUs', function (event) {
     event.preventDefault();
     $('#aboutUsContentParent').attr('style', 'display:block');
+    $('#searchContainer').attr('style', 'display:none');
+    $('#resultsContainer').attr('style', 'display:none');
 
 });
 
+// about us display container hiding and main container on display
+
+$(document).on('click', '#searchByLocationLink', function (event) {
+    event.preventDefault();
+    $('#aboutUsContentParent').attr('style', 'display:none');
+    $('#searchContainer').attr('style', 'display:block');
+    $('#resultsContainer').attr('style', 'display:block');
+
+});
+
+// about us content creator
+
 function aboutUsContentCreation() {
-    // about US content holder appended just above footer element
-    var mainContainer = $('#mainContainer')
+    var mainContainer = $('#mainContainer');
     var aboutUsContentParent = $('<div>');
     aboutUsContentParent.attr('class', 'sixteen wide column');
     aboutUsContentParent.attr('id', 'aboutUsContentParent');
@@ -388,7 +405,9 @@ function aboutUsContentCreation() {
     aboutUsProjectRepositoryURL.text('Repository URL');
     aboutUsContentParentUIGridColumnsFourth.append(aboutUsProjectRepositoryURL);
 
-    mainContainer.append(aboutUsContentParent);
+    // header.after(aboutUsContentParent);
+    mainContainer.prepend(aboutUsContentParent);
+    // footer.before(aboutUsContentParent);
 };
 
 
