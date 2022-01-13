@@ -6,10 +6,10 @@ var listOfRunningFilmsInCinema = [];
 
 // Erin's code - location list
 //Declaration of HTML variables
-var locationForm = document.getElementById("location-input");
-var locationInput = document.getElementById("inputSearch");
-var locationSubmit = document.getElementById("submitButton");
-var locationStorage = document.getElementById("locations");
+const locationForm = document.getElementById("location-input");
+const locationInput = document.getElementById("inputSearch");
+const locationSubmit = document.getElementById("submitButton");
+const locations = document.getElementById("locations");
 // End of Erin's code - location list
 
 
@@ -20,35 +20,30 @@ var header =
 
 
 // Erin's code - location list
-// Save existing notes
-let locationStorage = localStorage.getItem("locations");
-    ? JSON.parse(localStorage.getItem("locations"))
-    : [];
-// Save new location when the form is submitted
 locationForm.addEventListener("submit", (e) => {
     e.preventDefault();
-    locationStorage.push(locationInput.value);
-    localStorage.setItem("locations", JSON.stringify(locationStorage));
+    locationsStorage.push(locationInput.value);
+    localStorage.setItem("locations", JSON.stringify(locationsStorage));
     listBuilder(locationInput.value);
     locationInput.value = "";
-});
-// Adds note to list
-const listBuilder = (text) => {
+  });
+// Add locations to unordered list
+  const listBuilder = (text) => {
     const location = document.createElement("li");
     location.innerHTML = text + ' <button onclick="deleteLocation(this)">x</button>';
-    locationStorage.appendChild(note);
-};
-// Retrieves previous searches when page refreshed
+    locations.appendChild(location);
+  };
+//Reload previous locations from localStorage when page reloaded
 const getLocations = JSON.parse(localStorage.getItem("locations"));
-getNotes.forEach((location) => {
-    listBuilder(location);
+getLocations.forEach((location) => {
+  listBuilder(location);
 });
-// Addition of delete button
+// Delete button for cleanup
 const deleteLocation = (btn) => {
     let el = btn.parentNode;
     const index = [...el.parentElement.children].indexOf(el);
-    locationStorage.splice(index, 1);
-    localStorage.setItem("notes", JSON.stringify(locationStorage));
+    locationsStorage.splice(index, 1);
+    localStorage.setItem("locations", JSON.stringify(locationsStorage));
     el.remove();
   };
 // End of Erin's code - location list
