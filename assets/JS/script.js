@@ -149,11 +149,8 @@ function displayListOfCinemasNearMe() {
 
 }
 
-var targetContent;
-
 $(document).on('click', '.eachCinemas', function (event) {
     event.preventDefault();
-    console.log(targetContent);
     displaylistOfFilmsRunningNow(event.target.getAttribute('name'));
 });
 
@@ -170,7 +167,6 @@ function displaylistOfFilmsRunningNow(cinemaName) {
                 var image = $('<div>');
                 image.attr('class', 'image');
                 var imageTag = $('<img>');
-                // console.log(film.images.still['1'].medium.film_image);
                 imageTag.attr('src', film.images.poster["1"].medium.film_image);
                 image.append(imageTag);
                 card.append(image);
