@@ -4,7 +4,6 @@ var sButton = document.querySelector("#submitButton")
 var listOfCinemasNearMe;
 var listOfRunningFilmsInCinema = [];
 // Erin's code - location list
-var previousSearch = document.querySelector("#inputSearch");
 var usersSearchListGroupEl = document.querySelector(".prev-search");
 var existingEntries = JSON.parse(localStorage.getItem("locations"));
 // End of Erin's code - location list
@@ -251,7 +250,7 @@ sButton.addEventListener('click', (event) => {
 function createNewLocationButton(locationName, location) {
     var locationBtnEl = document.createElement("button");
     locationBtnEl.setAttribute("type", "button");
-    locationBtnEl.classList.add("ui button", "list-group-item");
+    locationBtnEl.classList.add("button", "list-group-item");
     locationBtnEl.textContent = locationName;
     locationBtnEl.setAttribute("value", locationName);
     location.prepend(locationBtnEl);
@@ -260,8 +259,7 @@ function createNewLocationButton(locationName, location) {
       for (var i = 0; i < allLocationBtns.length; i++) {
         allLocationBtns[i].classList.remove("active");
       }
-      getCurrentWeather(locationBtnEl.value, apiKey);
-      getForecast(locationBtnEl.value, apiKey);
+      addressToGeoCode(city)(locationBtnEl.value);
       locationBtnEl.classList.add("active");
     });
   }
