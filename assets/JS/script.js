@@ -11,6 +11,7 @@ var locationInput = document.getElementById("inputSearch");
 var locationSubmit = document.getElementById("submitButton");
 var locations = document.getElementById("locations");
 
+
 // End of Erin's code - location list
 
 
@@ -21,22 +22,18 @@ var GeoStatus = false;
 
 
 // Erin's code - location list
-let locationsStorage = localStorage.getItem("locations");
-locationForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-    locationsStorage.push(locationInput.value);
-    localStorage.setItem("locations", JSON.stringify(locationsStorage));
-    listBuilder(locationInput.value);
-    locationInput.value = "";
-  });
+var prevSearches = localStorage.getItem('previousSearches');
+prevSearches = prevSearches ? prevSearches.split(',') : [];
+existing.push(locationInput);
+localStorage.setItem('previousSearches', existing.toString());
 // Add locations to unordered list
   const listBuilder = (text) => {
     const location = document.createElement("li");
-    location.innerHTML = text + ' <button onclick="deleteLocation(this)">x</button>';
+    location.innerHTML = text;
     locations.appendChild(location);
   };
 //Reload previous locations from localStorage when page reloaded
-const getLocations = JSON.parse(localStorage.getItem("locations"));
+const getLocations = JSON.parse(localStorage.getItem("previousSearches"));
 getLocations.forEach((location) => {
   listBuilder(location);
 });
