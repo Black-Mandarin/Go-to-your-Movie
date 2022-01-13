@@ -3,12 +3,28 @@ var inputSearch = document.querySelector("#inputSearch")
 var sButton = document.querySelector("#submitButton")
 var listOfCinemasNearMe;
 var listOfRunningFilmsInCinema = [];
+// Erin's code - location list
+var previousSearch = document.querySelector("#inputSearch");
+var usersSearchListGroupEl = document.querySelector(".prev-search");
+var existingEntries = JSON.parse(localStorage.getItem("locations"));
+// End of Erin's code - location list
 
 
 var geo;
 var GeoStatus = false;
 //assigning default header
 var header =
+
+// Erin's code - location list
+//window.onload = function initializeDashboard() {
+    //// Generating locally saved location list
+    //if (localStorage.getItem("locations") !== null
+      //for (var i = 0; i < existingEntries.length; i++) {
+        //// Buttons for previous location listings
+        //createNewLocationButton(existingEntries[i], usersSearchListGroupEl);
+    //}
+  //}
+//}
 
 
 {
@@ -229,6 +245,28 @@ sButton.addEventListener('click', (event) => {
 
 
 })
+
+// Erin's code - location list
+// Add search location to previously searched locations list
+function createNewLocationButton(locationName, location) {
+    var locationBtnEl = document.createElement("button");
+    locationBtnEl.setAttribute("type", "button");
+    locationBtnEl.classList.add("ui button", "list-group-item");
+    locationBtnEl.textContent = locationName;
+    locationBtnEl.setAttribute("value", locationName);
+    location.prepend(locationBtnEl);
+    locationBtnEl.addEventListener("click", function () {
+      var allLocationBtns = document.querySelectorAll(".list-group-item");
+      for (var i = 0; i < allLocationBtns.length; i++) {
+        allLocationBtns[i].classList.remove("active");
+      }
+      getCurrentWeather(locationBtnEl.value, apiKey);
+      getForecast(locationBtnEl.value, apiKey);
+      locationBtnEl.classList.add("active");
+    });
+  }
+// End of Erin's code - location list
+
 /////////////////////////////////////////////////////////////////////////////////////////////////codeabove mazahim
 // About Us
 
