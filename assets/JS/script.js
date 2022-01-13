@@ -6,20 +6,22 @@ var listOfRunningFilmsInCinema = [];
 
 // Erin's code - location list
 //Declaration of HTML variables
-const locationForm = document.getElementById("location-input");
-const locationInput = document.getElementById("inputSearch");
-const locationSubmit = document.getElementById("submitButton");
-const locations = document.getElementById("locations");
+var locationForm = document.getElementById("location-input");
+var locationInput = document.getElementById("inputSearch");
+var locationSubmit = document.getElementById("submitButton");
+var locations = document.getElementById("locations");
+
 // End of Erin's code - location list
 
 
 var geo;
 var GeoStatus = false;
 //assigning default header
-var header =
+//var header =
 
 
 // Erin's code - location list
+let locationsStorage = localStorage.getItem("locations");
 locationForm.addEventListener("submit", (e) => {
     e.preventDefault();
     locationsStorage.push(locationInput.value);
@@ -38,14 +40,6 @@ const getLocations = JSON.parse(localStorage.getItem("locations"));
 getLocations.forEach((location) => {
   listBuilder(location);
 });
-// Delete button for cleanup
-const deleteLocation = (btn) => {
-    let el = btn.parentNode;
-    const index = [...el.parentElement.children].indexOf(el);
-    locationsStorage.splice(index, 1);
-    localStorage.setItem("locations", JSON.stringify(locationsStorage));
-    el.remove();
-  };
 // End of Erin's code - location list
 
 
