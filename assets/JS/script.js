@@ -16,16 +16,16 @@ var GeoStatus = false;
 var header =
 
 // Erin's code - location list
-//window.onload = function initializeDashboard() {
-    //// Generating locally saved location list
-    //if (localStorage.getItem("locations") !== null
-      //for (var i = 0; i < existingEntries.length; i++) {
-        //// Buttons for previous location listings
-        //createNewLocationButton(existingEntries[i], usersSearchListGroupEl);
-    //}
-  //}
-//}
-
+window.onload = function initializeDashboard() {
+    // Generating locally saved location list
+    if (localStorage.getItem("locations") !== null) {
+      for (var i = 0; i < existingEntries.length; i++) {
+        // Buttons for previous location listings
+        createNewLocationButton(existingEntries[i], usersSearchListGroupEl);
+    }
+  }
+}
+// End of Erin's code - location list
 
 {
 
