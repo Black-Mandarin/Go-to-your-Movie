@@ -1,6 +1,7 @@
 var search = document.querySelector("#search")
 var inputSearch = document.querySelector("#inputSearch")
 var sButton = document.querySelector("#submitButton")
+var myModal = document.querySelector("#myModal")
 var listOfCinemasNearMe;
 var listOfRunningFilmsInCinema = [];
 
@@ -24,9 +25,9 @@ var header =
 
     //limited call -75
 
-    //  "client":"MONA_5",
-    //  "x-api-key":"yPMmst0g973ITePN2iYQc5ka9vhVNFbxakarWB1o",
-    //  "authorization":"Basic TU9OQV81OkoybjNPVGtmaWZQcw==",
+    //  "client":"MONA_6",
+    //  "x-api-key":"jCQ5tHVY0y7uW79EmhGDR9ZkBycNTLUeaEbKqCSf",
+    //  "authorization":"Basic TU9OQV82OkczWlJLVllNcGFjRA==",
     //  "territory":"AU",
     //   "api-version":"v200",
     //   "geolocation":'',
@@ -89,12 +90,12 @@ function getGeo() {
 
         cloneHeaders = { ...header };
         //for real api
-        // cloneHeaders.geolocation=geo.latitude.toFixed(2).toString()+';'+geo.longitude.toFixed(2).toString()
+       //  cloneHeaders.geolocation=geo.latitude.toFixed(2).toString()+';'+geo.longitude.toFixed(2).toString()
 
         //for sandbox api
         cloneHeaders.geolocation = '-22.0;14.0'
 
-        axios.get('https://api-gate2.movieglu.com/cinemasNearby/?n=10', {
+        axios?.get('https://api-gate2.movieglu.com/cinemasNearby/?n=10', {
             headers: cloneHeaders
         }).then((response) => {
             listOfCinemasNearMe = response.data.cinemas;
@@ -107,17 +108,18 @@ function getGeo() {
                     headers: cloneHeaders
                 }).then((response) => {
 
+              
                     var data = {
                         cinema_name: cinema_name,
                         films: response.data.films
 
                     }
                     listOfRunningFilmsInCinema.push(data);
-                    console.log(data);
+                    // console.log(data);
                 })
 
             })
-            console.log(listOfCinemasNearMe, listOfRunningFilmsInCinema);
+            // console.log(listOfCinemasNearMe, listOfRunningFilmsInCinema);
             displayListOfCinemasNearMe();
 
 
@@ -169,7 +171,7 @@ function displaylistOfFilmsRunningNow(cinemaName) {
                 var image = $('<div>');
                 image.attr('class', 'image');
                 var imageTag = $('<img>');
-                imageTag.attr('src', film.images.poster["1"].medium.film_image);
+                imageTag.attr('src', film.images?.poster["1"]?.medium?.film_image);
                 image.append(imageTag);
                 card.append(image);
 
@@ -210,7 +212,7 @@ sButton.addEventListener('click', (event) => {
 
     const city = inputSearch.value
     addressToGeoCode(city)
-
+    inputSearch.value=''
 
     if (GeoStatus) {
         console.log('i have geo-')
@@ -227,6 +229,39 @@ sButton.addEventListener('click', (event) => {
 
 
 })
+
+
+$(document).on('click','.cards',(event)=>{
+
+    var text = $(event.target).text();
+    console.log(text)
+
+myModal.style.display = "block";
+ 
+$('#header').text('Movie Details at Cineama')
+$('#imageTag').attr('src','https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Zm9jdXN8ZW58MHx8MHx8&w=1000&q=80')
+$('#movieName').text('Movie Name will be here')
+$('#descriptionMovie').text('Moviee Description here')
+
+    
+ 
+})
+
+
+$(document).on('click','#go',(event)=>{
+    myModal.style.display = "none";
+})
+
+
+
+
+autocomplete_city = new google.maps.places.Autocomplete(
+    (document.getElementById('inputSearch')), {
+      types: ['(cities)'],
+      componentRestrictions: {country: 'AU'}
+    });
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////codeabove mazahim
 // About Us
 
