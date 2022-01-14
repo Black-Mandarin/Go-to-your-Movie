@@ -99,6 +99,7 @@ function getGeo() {
             headers: cloneHeaders
         }).then((response) => {
             listOfCinemasNearMe = response.data.cinemas;
+            listOfRunningFilmsInCinema.length = 0;
 
             response.data.cinemas.map((singledata) => {
 
