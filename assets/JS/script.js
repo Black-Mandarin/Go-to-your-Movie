@@ -2,12 +2,19 @@ var search = document.querySelector("#search")
 var inputSearch = document.querySelector("#inputSearch")
 var sButton = document.querySelector("#submitButton")
 var myModal = document.querySelector("#myModal")
+var main = document.querySelector("#main")
+var loader = document.querySelector("#loader")
+var ol_listItem = document.querySelector("#olList")
+
+
 var listOfCinemasNearMe;
 var listOfRunningFilmsInCinema = [];
 
-
+main.style.display="none"
 var geo;
 var GeoStatus = false;
+
+var recentLists=[];
 //assigning default header
 var header =
 
@@ -52,6 +59,41 @@ function getGeoLocationByDefault() {
 getGeoLocationByDefault()
 
 
+
+
+var retrievedData = localStorage.getItem("movie-data");
+if(retrievedData!=null){
+    var myData = JSON.parse(retrievedData);
+    myData.forEach((data)=>{
+        recentLists.push(data)
+    })
+    
+}
+
+function create_recentLists(myArray){
+    $('#olList').empty();
+    var index=0
+    myArray.forEach((list)=>{
+        
+      
+const li= document.createElement('li')
+li.setAttribute('style','color:black')
+ol_listItem.appendChild(li)
+li.textContent=list
+
+       li.addEventListener('click',(event)=>{
+          console.log(list)
+      
+       })  
+           
+     
+     
+    })
+    
+}
+
+create_recentLists(recentLists)
+
 function addressToGeoCode(city) {
     var url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + city + '&key=AIzaSyBi2s5puIfi0U5S0NRdR4NiprHdtQf2JFA'
     fetch(url)
@@ -87,6 +129,8 @@ function getGeo() {
 
     if (GeoStatus) {
         console.log('i have geo-')
+       
+
 
         cloneHeaders = { ...header };
         //for real api
@@ -116,19 +160,26 @@ function getGeo() {
 
                     }
                     listOfRunningFilmsInCinema.push(data);
+
                     // console.log(data);
                 })
 
             })
             // console.log(listOfCinemasNearMe, listOfRunningFilmsInCinema);
             displayListOfCinemasNearMe();
-
+            loader.style.display="none"
+            main.style.display="block"
 
         })
         //////////////////////
 
     } else {
-        console.log('i need to wait')
+      
+
+
+
+
+
         setTimeout(getGeo, 300); // try again in 300 milliseconds
     }
 }
@@ -210,9 +261,20 @@ sButton.addEventListener('click', (event) => {
     //get value from searchbox eg:-Cranbourne
 
 
-
     const city = inputSearch.value
     addressToGeoCode(city)
+
+    recentLists.push(city)
+
+
+    let uniquerecentList = recentLists.filter((c, index) => {
+        return recentLists.indexOf(c) === index;
+    });
+
+
+    create_recentLists(recentLists)
+
+    localStorage.setItem("movie-data", JSON.stringify(uniquerecentList));
     inputSearch.value=''
 
     if (GeoStatus) {
@@ -261,6 +323,8 @@ autocomplete_city = new google.maps.places.Autocomplete(
       types: ['(cities)'],
       componentRestrictions: {country: 'AU'}
     });
+
+
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////codeabove mazahim

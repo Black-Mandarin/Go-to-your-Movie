@@ -14,8 +14,17 @@
 </head>
 
 <body>
+
+  <div id="loader" class="ui segment center-screen">
+    <div class="ui active dimmer">
+      <div class="ui text loader">Loading</div>
+    </div>
+    <p></p>
+  </div>
+
+
   <!-- Main Column-->
-  <div class="ui segment">
+  <div id="main" class="ui segment">
     <header class="ui grid padded">
       <!-- Header  Not Working??-->
       <h1 class="ui center aligned header"> Go to The Movies </h1>
@@ -42,9 +51,8 @@
 
           <div class="ui segment">
             <h3 class="ui center aligned header">Recent Searches</h3>
-            <ol class="ui list">
-              <li>Melboure Cinmas</li>
-              <li>Village Crown</li>
+            <ol id="olList" class="ui list">
+        
             </ol>
           </div>
         </div>
