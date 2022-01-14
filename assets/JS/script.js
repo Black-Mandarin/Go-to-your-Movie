@@ -375,7 +375,7 @@ function aboutUsContentCreation() {
 
     // first column
     var aboutUsContentParentUIGridColumnsFirst = $('<div>');
-    aboutUsContentParentUIGridColumnsFirst.attr('class', 'sixteen wide column');
+    aboutUsContentParentUIGridColumnsFirst.attr('class', 'sixteen wide column teal');
     aboutUsContentParentUIGrid.append(aboutUsContentParentUIGridColumnsFirst);
 
 
@@ -389,36 +389,36 @@ function aboutUsContentCreation() {
     aboutUsContentParentUIGridColumnsSecond.append(aboutUsContentParentSecondColUISegment);
 
     var aboutUsContentParentSecondColUIGrid = $('<div>');
-    aboutUsContentParentSecondColUIGrid.attr('class', 'ui grid');
+    aboutUsContentParentSecondColUIGrid.attr('class', 'ui grid doubling stackable container');
     aboutUsContentParentSecondColUISegment.append(aboutUsContentParentSecondColUIGrid);
 
     var aboutUsContentParentSecondColSubCol1 = $('<div>');
-    aboutUsContentParentSecondColSubCol1.attr('class', 'four wide column');
+    aboutUsContentParentSecondColSubCol1.attr('class', 'four wide column olive');
     aboutUsContentParentSecondColUIGrid.append(aboutUsContentParentSecondColSubCol1);
 
     var aboutUsContentParentSecondColSubCol2 = $('<div>');
-    aboutUsContentParentSecondColSubCol2.attr('class', 'four wide column');
+    aboutUsContentParentSecondColSubCol2.attr('class', 'four wide column green');
     aboutUsContentParentSecondColUIGrid.append(aboutUsContentParentSecondColSubCol2);
 
     var aboutUsContentParentSecondColSubCol3 = $('<div>');
-    aboutUsContentParentSecondColSubCol3.attr('class', 'four wide column');
+    aboutUsContentParentSecondColSubCol3.attr('class', 'four wide column teal');
     aboutUsContentParentSecondColUIGrid.append(aboutUsContentParentSecondColSubCol3);
 
     var aboutUsContentParentSecondColSubCol4 = $('<div>');
-    aboutUsContentParentSecondColSubCol4.attr('class', 'four wide column');
+    aboutUsContentParentSecondColSubCol4.attr('class', 'four wide column blue');
     aboutUsContentParentSecondColUIGrid.append(aboutUsContentParentSecondColSubCol4);
 
 
     // third column
 
     var aboutUsContentParentUIGridColumnsThird = $('<div>');
-    aboutUsContentParentUIGridColumnsThird.attr('class', 'sixteen wide column');
+    aboutUsContentParentUIGridColumnsThird.attr('class', 'sixteen wide column orange');
     aboutUsContentParentUIGrid.append(aboutUsContentParentUIGridColumnsThird);
 
     // fourth column
 
     var aboutUsContentParentUIGridColumnsFourth = $('<div>');
-    aboutUsContentParentUIGridColumnsFourth.attr('class', 'sixteen wide column');
+    aboutUsContentParentUIGridColumnsFourth.attr('class', 'sixteen wide column teal');
     aboutUsContentParentUIGrid.append(aboutUsContentParentUIGridColumnsFourth);
 
 
