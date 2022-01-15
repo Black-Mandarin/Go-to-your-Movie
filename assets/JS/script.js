@@ -168,10 +168,10 @@ function getGeo() {
 
         cloneHeaders = { ...header };
         //for real api
-      //   cloneHeaders.geolocation=geo.latitude.toFixed(2).toString()+';'+geo.longitude.toFixed(2).toString()
+       //  cloneHeaders.geolocation=geo.latitude.toFixed(2).toString()+';'+geo.longitude.toFixed(2).toString()
 
         //for sandbox api
-        cloneHeaders.geolocation = '-22.0;14.0'
+       cloneHeaders.geolocation = '-22.0;14.0'
 
         axios?.get('https://api-gate2.movieglu.com/cinemasNearby/?n=10', {
             headers: cloneHeaders
@@ -296,7 +296,7 @@ $('#'+film.film_id).on('click',()=>{
    axios.get('https://api-gate2.movieglu.com/filmDetails/?film_id='+film.film_id, {
     headers: cloneHeaders
 }).then((response) => {
-const {synopsis_long,show_dates}=response.data
+const {synopsis_long,show_dates,cast,directors,producers,writers}=response.data
 
  
 var source = document.createElement('source');
@@ -325,9 +325,51 @@ content.text(element.date)
 })
 
 
+cast.map((cast)=>{
 
+var item1=$('<div>')
+item1.attr('class','item')
+$('#cast').append(item1)
 
+var content1=$('<div>')
+content1.attr('class', 'content')
+item1.append(content1)
 
+var header1=$('<div>')
+header1.attr('class', 'header')
+content1.append(header1)
+header1.text(cast.cast_name)
+})
+
+directors.map((director)=>{
+    var item2=$('<div>')
+    item2.attr('class','item')
+    $('#dir').append(item2)
+    
+    var content2=$('<div>')
+    content2.attr('class', 'content')
+    item2.append(content2)
+    
+    var header2=$('<div>')
+    header2.attr('class', 'header')
+    content2.append(header2)
+    header2.text(director.director_name)
+})
+
+producers.map((producer)=>{
+    var item3=$('<div>')
+    item3.attr('class','item')
+    $('#pro').append(item3)
+    
+    var content3=$('<div>')
+    content3.attr('class', 'content')
+    item3.append(content3)
+    
+    var header3=$('<div>')
+    header3.attr('class', 'header')
+    content3.append(header3)
+    header3.text(producer.producer_name)
+})
 
 })
 
