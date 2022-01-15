@@ -219,11 +219,13 @@ function displaylistOfFilmsRunningNow(cinemaName) {
                 console.log(element.films);
                 var card = $('<div>');
                 card.attr('class', 'card');
+                card.attr('style', 'width:215px');
 
                 var image = $('<div>');
                 image.attr('class', 'image');
                 var imageTag = $('<img>');
                 imageTag.attr('src', film.images?.poster["1"]?.medium?.film_image);
+                // imageTag.attr('style', 'width:150px; height:225px;');
                 image.append(imageTag);
                 card.append(image);
 
