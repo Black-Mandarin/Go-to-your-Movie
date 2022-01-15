@@ -1,11 +1,11 @@
 var search = document.querySelector("#search")
 var inputSearch = document.querySelector("#inputSearch")
 var sButton = document.querySelector("#submitButton")
-var myModal = document.querySelector("#myModal")
+
 var main = document.querySelector("#main")
 var loader = document.querySelector("#loader")
 var ol_listItem = document.querySelector("#olList")
-
+var modal = document.getElementById('myModal');
 
 var listOfCinemasNearMe;
 var listOfRunningFilmsInCinema = [];
@@ -16,6 +16,7 @@ var GeoStatus = false;
 
 var recentLists=[];
 //assigning default header
+var cloneHeaders;
 var header =
 
 
@@ -184,6 +185,8 @@ function getGeo() {
                 }).then((response) => {
 
               
+         
+
                     var data = {
                         cinema_name: cinema_name,
                         films: response.data.films
@@ -247,11 +250,11 @@ function displaylistOfFilmsRunningNow(cinemaName) {
     listOfRunningFilmsInCinema.forEach(function (element) {
         if (element.cinema_name === cinemaName) {
             element.films.forEach(function (film) {
-                console.log(element.films);
+                console.log(film);
                 var card = $('<div>');
                 card.attr('class', 'card');
                 card.attr('style', 'width:215px');
-
+                card.attr('id', film.film_id);
                 var image = $('<div>');
                 image.attr('class', 'image');
                 var imageTag = $('<img>');
@@ -280,6 +283,63 @@ function displaylistOfFilmsRunningNow(cinemaName) {
                 extra_content.append(filmReleaseYear);
                 card.append(extra_content);
                 $('#listOfFilms').append(card);
+
+$('#'+film.film_id).on('click',()=>{
+    
+
+   // https://api-gate2.movieglu.com/filmDetails/?film_id=7772
+
+
+   axios.get('https://api-gate2.movieglu.com/filmDetails/?film_id='+film.film_id, {
+    headers: cloneHeaders
+}).then((response) => {
+const {synopsis_long,show_dates}=response.data
+console.log(show_dates)
+ 
+ $('#header').text('Movie Details at Cineama')
+$('#imageTag').attr('src',film.images?.poster["1"]?.medium?.film_image)
+$('#movieName').text(film.film_name)
+$('#descriptionMovie').text(synopsis_long)
+$("#myModal").modal('show');
+
+
+show_dates.map((element)=>{
+// console.log(element.date)
+
+{/* <div class="item">
+              
+<div class="content">
+ 
+  12.30PM
+</div>
+</div> */}
+
+var item=$('<div>')
+item.attr('class', 'item')
+$('#horizontalList').append(item)
+
+var content=$('<div>')
+content.attr('class', 'content')
+item.append(content)
+content.text(element.date)
+
+})
+
+
+
+
+
+
+})
+
+
+
+
+
+   
+
+})
+
             });
         }
     });
@@ -327,27 +387,17 @@ sButton.addEventListener('click', (event) => {
 })
 
 
-$(document).on('click','.cards',(event)=>{
+// $(document).on('click','.cards',(event)=>{
 
-    var text = $(event.target).text();
-    console.log(text)
+//     var text = $(event.target).text();
+//     console.log(text)
 
-myModal.style.display = "block";
  
-$('#header').text('Movie Details at Cineama')
-$('#imageTag').attr('src','https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Zm9jdXN8ZW58MHx8MHx8&w=1000&q=80')
-$('#movieName').text('Movie Name will be here')
-$('#descriptionMovie').text('Moviee Description here')
+
 
     
  
-})
-
-
-$(document).on('click','#go',(event)=>{
-    myModal.style.display = "none";
-})
-
+// })
 
 
 
@@ -358,7 +408,9 @@ autocomplete_city = new google.maps.places.Autocomplete(
     });
 
 
-
+// $(document).on('click','.card',(event)=>{
+//    console.log(event.target.getAttribute('id'))     
+// })
 
 /////////////////////////////////////////////////////////////////////////////////////////////////codeabove mazahim
 // About Us
