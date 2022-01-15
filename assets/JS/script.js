@@ -43,16 +43,33 @@ var header =
 }
 
 function getGeoLocationByDefault() {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition((position) => {
+
+
+    navigator.geolocation.watchPosition(function(position) {
+
+
             geo = position.coords
             GeoStatus = true
 
+      },
+      function(error) {
+        if (error.code == error.PERMISSION_DENIED)
+        alertify.warning('Please allow GeoLOcation inorder to get best user experience')
 
-        });
-    } else {
-        alert("Geolocation is not supported by this browser.");
-    }
+        addressToGeoCode('Melbourne VIC, Australia')
+
+        if (GeoStatus) {
+            console.log('i have geo-')
+    
+        } else {
+            console.log('i need to wait')
+            setTimeout(getGeo, 300); // try again in 300 milliseconds
+        }
+   
+      });
+
+
+
 }
 
 //call method
@@ -82,7 +99,19 @@ ol_listItem.appendChild(li)
 li.textContent=list
 
        li.addEventListener('click',(event)=>{
+        GeoStatus=false
+
           console.log(list)
+          addressToGeoCode(list)
+
+
+          if (GeoStatus) {
+            console.log('i have geo-')
+    
+        } else {
+            console.log('i need to wait')
+            setTimeout(getGeo, 300); // try again in 300 milliseconds
+        }
       
        })  
            
@@ -95,6 +124,7 @@ li.textContent=list
 create_recentLists(recentLists)
 
 function addressToGeoCode(city) {
+    console.log('test')
     var url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + city + '&key=AIzaSyBi2s5puIfi0U5S0NRdR4NiprHdtQf2JFA'
     fetch(url)
         .then(function (response) {
@@ -134,7 +164,7 @@ function getGeo() {
 
         cloneHeaders = { ...header };
         //for real api
-       //  cloneHeaders.geolocation=geo.latitude.toFixed(2).toString()+';'+geo.longitude.toFixed(2).toString()
+        // cloneHeaders.geolocation=geo.latitude.toFixed(2).toString()+';'+geo.longitude.toFixed(2).toString()
 
         //for sandbox api
         cloneHeaders.geolocation = '-22.0;14.0'
@@ -169,6 +199,7 @@ function getGeo() {
             displayListOfCinemasNearMe();
             loader.style.display="none"
             main.style.display="block"
+            alertify.success('Connected to Saver');
 
         })
         //////////////////////
