@@ -7,6 +7,9 @@ var loader = document.querySelector("#loader")
 var ol_listItem = document.querySelector("#olList")
 var modal = document.getElementById('myModal');
 
+var video = document.getElementById("myVideo"); 
+var parentvideo = document.getElementById("parentvideo"); 
+
 var listOfCinemasNearMe;
 var listOfRunningFilmsInCinema = [];
 
@@ -165,7 +168,7 @@ function getGeo() {
 
         cloneHeaders = { ...header };
         //for real api
-        // cloneHeaders.geolocation=geo.latitude.toFixed(2).toString()+';'+geo.longitude.toFixed(2).toString()
+      //   cloneHeaders.geolocation=geo.latitude.toFixed(2).toString()+';'+geo.longitude.toFixed(2).toString()
 
         //for sandbox api
         cloneHeaders.geolocation = '-22.0;14.0'
@@ -259,7 +262,6 @@ function displaylistOfFilmsRunningNow(cinemaName) {
                 image.attr('class', 'image');
                 var imageTag = $('<img>');
                 imageTag.attr('src', film.images?.poster["1"]?.medium?.film_image);
-                // imageTag.attr('style', 'width:150px; height:225px;');
                 image.append(imageTag);
                 card.append(image);
 
@@ -285,34 +287,31 @@ function displaylistOfFilmsRunningNow(cinemaName) {
                 $('#listOfFilms').append(card);
 
 $('#'+film.film_id).on('click',()=>{
-    
 
-   // https://api-gate2.movieglu.com/filmDetails/?film_id=7772
-
+    //i am trying to remove video and load new
+    video.pause();
+    video.removeChild(video.childNodes[0]);    
+  
 
    axios.get('https://api-gate2.movieglu.com/filmDetails/?film_id='+film.film_id, {
     headers: cloneHeaders
 }).then((response) => {
 const {synopsis_long,show_dates}=response.data
-console.log(show_dates)
+
  
- $('#header').text('Movie Details at Cineama')
-$('#imageTag').attr('src',film.images?.poster["1"]?.medium?.film_image)
+var source = document.createElement('source');
+
+source.setAttribute('src', response?.data?.trailers?.high[0]?.film_trailer);
+source.setAttribute('type', 'video/mp4');
+video.appendChild(source);
+
 $('#movieName').text(film.film_name)
 $('#descriptionMovie').text(synopsis_long)
 $("#myModal").modal('show');
 
 
 show_dates.map((element)=>{
-// console.log(element.date)
 
-{/* <div class="item">
-              
-<div class="content">
- 
-  12.30PM
-</div>
-</div> */}
 
 var item=$('<div>')
 item.attr('class', 'item')
@@ -350,54 +349,42 @@ content.text(element.date)
 
 sButton.addEventListener('click', (event) => {
     event.preventDefault();
-    GeoStatus = false
-    //get value from searchbox eg:-Cranbourne
+    if(inputSearch.value!="")
+    {
 
-
-    const city = inputSearch.value
-    addressToGeoCode(city)
-
-    recentLists.push(city)
-
-
-    let uniquerecentList = recentLists.filter((c, index) => {
-        return recentLists.indexOf(c) === index;
-    });
-
-
-    create_recentLists(recentLists)
-
-    localStorage.setItem("movie-data", JSON.stringify(uniquerecentList));
-    inputSearch.value=''
-
-    if (GeoStatus) {
-        console.log('i have geo-')
-
-    } else {
-        console.log('i need to wait')
-        setTimeout(getGeo, 300); // try again in 300 milliseconds
+        GeoStatus = false
+        //get value from searchbox eg:-Cranbourne
+    
+    
+        const city = inputSearch.value
+        addressToGeoCode(city)
+    
+        recentLists.push(city)
+    
+    
+        let uniquerecentList = recentLists.filter((c, index) => {
+            return recentLists.indexOf(c) === index;
+        });
+    
+    
+        create_recentLists(recentLists)
+    
+        localStorage.setItem("movie-data", JSON.stringify(uniquerecentList));
+        inputSearch.value=''
+    
+        if (GeoStatus) {
+            console.log('i have geo-')
+    
+        } else {
+            console.log('i need to wait')
+            setTimeout(getGeo, 300); // try again in 300 milliseconds
+        }
+    }
+    else{
+        alertify.message("Please enter a city...")
     }
 
-
-
-
-
-
-
 })
-
-
-// $(document).on('click','.cards',(event)=>{
-
-//     var text = $(event.target).text();
-//     console.log(text)
-
- 
-
-
-    
- 
-// })
 
 
 
@@ -408,9 +395,10 @@ autocomplete_city = new google.maps.places.Autocomplete(
     });
 
 
-// $(document).on('click','.card',(event)=>{
-//    console.log(event.target.getAttribute('id'))     
-// })
+    function pauseVideo(){
+        console.log('end')
+        video.pause();
+    }   
 
 /////////////////////////////////////////////////////////////////////////////////////////////////codeabove mazahim
 // About Us
