@@ -63,10 +63,10 @@ function getGeoLocationByDefault() {
         addressToGeoCode('Melbourne VIC, Australia')
 
         if (GeoStatus) {
-            console.log('i have geo-')
+            // console.log('i have geo-')
     
         } else {
-            console.log('i need to wait')
+            // console.log('i need to wait')
             setTimeout(getGeo, 300); // try again in 300 milliseconds
         }
    
@@ -110,10 +110,10 @@ li.textContent=list
 
 
           if (GeoStatus) {
-            console.log('i have geo-')
+            // console.log('i have geo-')
     
         } else {
-            console.log('i need to wait')
+            // console.log('i need to wait')
             setTimeout(getGeo, 300); // try again in 300 milliseconds
         }
       
@@ -128,7 +128,7 @@ li.textContent=list
 create_recentLists(recentLists)
 
 function addressToGeoCode(city) {
-    console.log('test')
+   
     var url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + city + '&key=AIzaSyBi2s5puIfi0U5S0NRdR4NiprHdtQf2JFA'
     fetch(url)
         .then(function (response) {
@@ -162,7 +162,7 @@ function getGeo() {
 
 
     if (GeoStatus) {
-        console.log('i have geo-')
+        // console.log('i have geo-')
        
 
 
@@ -253,7 +253,7 @@ function displaylistOfFilmsRunningNow(cinemaName) {
     listOfRunningFilmsInCinema.forEach(function (element) {
         if (element.cinema_name === cinemaName) {
             element.films.forEach(function (film) {
-                console.log(film);
+              
                 var card = $('<div>');
                 card.attr('class', 'card');
                 card.attr('style', 'width:215px');
@@ -289,8 +289,8 @@ function displaylistOfFilmsRunningNow(cinemaName) {
 $('#'+film.film_id).on('click',()=>{
 
     //i am trying to remove video and load new
-    video.pause();
-    video.removeChild(video.childNodes[0]);    
+    // video.pause();
+    // video.removeChild(video.childNodes[0]);    
   
 
    axios.get('https://api-gate2.movieglu.com/filmDetails/?film_id='+film.film_id, {
@@ -415,10 +415,10 @@ sButton.addEventListener('click', (event) => {
         inputSearch.value=''
     
         if (GeoStatus) {
-            console.log('i have geo-')
+            // console.log('i have geo-')
     
         } else {
-            console.log('i need to wait')
+            // console.log('i need to wait')
             setTimeout(getGeo, 300); // try again in 300 milliseconds
         }
     }
@@ -438,7 +438,7 @@ autocomplete_city = new google.maps.places.Autocomplete(
 
 
     function pauseVideo(){
-        console.log('end')
+        // console.log('end')
         video.pause();
     }   
 
