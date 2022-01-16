@@ -7,6 +7,9 @@ var loader = document.querySelector("#loader")
 var ol_listItem = document.querySelector("#olList")
 var modal = document.getElementById('myModal');
 
+var video = document.getElementById("myVideo"); 
+var parentvideo = document.getElementById("parentvideo"); 
+
 var listOfCinemasNearMe;
 var listOfRunningFilmsInCinema = [];
 
@@ -60,10 +63,10 @@ function getGeoLocationByDefault() {
         addressToGeoCode('Melbourne VIC, Australia')
 
         if (GeoStatus) {
-            console.log('i have geo-')
+            // console.log('i have geo-')
     
         } else {
-            console.log('i need to wait')
+            // console.log('i need to wait')
             setTimeout(getGeo, 300); // try again in 300 milliseconds
         }
    
@@ -107,10 +110,10 @@ li.textContent=list
 
 
           if (GeoStatus) {
-            console.log('i have geo-')
+            // console.log('i have geo-')
     
         } else {
-            console.log('i need to wait')
+            // console.log('i need to wait')
             setTimeout(getGeo, 300); // try again in 300 milliseconds
         }
       
@@ -125,7 +128,7 @@ li.textContent=list
 create_recentLists(recentLists)
 
 function addressToGeoCode(city) {
-    console.log('test')
+   
     var url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + city + '&key=AIzaSyBi2s5puIfi0U5S0NRdR4NiprHdtQf2JFA'
     fetch(url)
         .then(function (response) {
@@ -159,16 +162,16 @@ function getGeo() {
 
 
     if (GeoStatus) {
-        console.log('i have geo-')
+        // console.log('i have geo-')
        
 
 
         cloneHeaders = { ...header };
         //for real api
-        // cloneHeaders.geolocation=geo.latitude.toFixed(2).toString()+';'+geo.longitude.toFixed(2).toString()
+       //  cloneHeaders.geolocation=geo.latitude.toFixed(2).toString()+';'+geo.longitude.toFixed(2).toString()
 
         //for sandbox api
-        cloneHeaders.geolocation = '-22.0;14.0'
+       cloneHeaders.geolocation = '-22.0;14.0'
 
         axios?.get('https://api-gate2.movieglu.com/cinemasNearby/?n=10', {
             headers: cloneHeaders
@@ -250,7 +253,7 @@ function displaylistOfFilmsRunningNow(cinemaName) {
     listOfRunningFilmsInCinema.forEach(function (element) {
         if (element.cinema_name === cinemaName) {
             element.films.forEach(function (film) {
-                console.log(film);
+              
                 var card = $('<div>');
                 card.attr('class', 'card');
                 card.attr('style', 'width:215px');
@@ -259,7 +262,6 @@ function displaylistOfFilmsRunningNow(cinemaName) {
                 image.attr('class', 'image');
                 var imageTag = $('<img>');
                 imageTag.attr('src', film.images?.poster["1"]?.medium?.film_image);
-                // imageTag.attr('style', 'width:150px; height:225px;');
                 image.append(imageTag);
                 card.append(image);
 
@@ -285,34 +287,31 @@ function displaylistOfFilmsRunningNow(cinemaName) {
                 $('#listOfFilms').append(card);
 
 $('#'+film.film_id).on('click',()=>{
-    
 
-   // https://api-gate2.movieglu.com/filmDetails/?film_id=7772
-
+    //i am trying to remove video and load new
+    // video.pause();
+    // video.removeChild(video.childNodes[0]);    
+  
 
    axios.get('https://api-gate2.movieglu.com/filmDetails/?film_id='+film.film_id, {
     headers: cloneHeaders
 }).then((response) => {
-const {synopsis_long,show_dates}=response.data
-console.log(show_dates)
+const {synopsis_long,show_dates,cast,directors,producers,writers}=response.data
+
  
- $('#header').text('Movie Details at Cineama')
-$('#imageTag').attr('src',film.images?.poster["1"]?.medium?.film_image)
+var source = document.createElement('source');
+
+source.setAttribute('src', response?.data?.trailers?.high[0]?.film_trailer);
+source.setAttribute('type', 'video/mp4');
+video.appendChild(source);
+
 $('#movieName').text(film.film_name)
 $('#descriptionMovie').text(synopsis_long)
 $("#myModal").modal('show');
 
 
 show_dates.map((element)=>{
-// console.log(element.date)
 
-{/* <div class="item">
-              
-<div class="content">
- 
-  12.30PM
-</div>
-</div> */}
 
 var item=$('<div>')
 item.attr('class', 'item')
@@ -326,9 +325,51 @@ content.text(element.date)
 })
 
 
+cast.map((cast)=>{
 
+var item1=$('<div>')
+item1.attr('class','item')
+$('#cast').append(item1)
 
+var content1=$('<div>')
+content1.attr('class', 'content')
+item1.append(content1)
 
+var header1=$('<div>')
+header1.attr('class', 'header')
+content1.append(header1)
+header1.text(cast.cast_name)
+})
+
+directors.map((director)=>{
+    var item2=$('<div>')
+    item2.attr('class','item')
+    $('#dir').append(item2)
+    
+    var content2=$('<div>')
+    content2.attr('class', 'content')
+    item2.append(content2)
+    
+    var header2=$('<div>')
+    header2.attr('class', 'header')
+    content2.append(header2)
+    header2.text(director.director_name)
+})
+
+producers.map((producer)=>{
+    var item3=$('<div>')
+    item3.attr('class','item')
+    $('#pro').append(item3)
+    
+    var content3=$('<div>')
+    content3.attr('class', 'content')
+    item3.append(content3)
+    
+    var header3=$('<div>')
+    header3.attr('class', 'header')
+    content3.append(header3)
+    header3.text(producer.producer_name)
+})
 
 })
 
@@ -350,54 +391,42 @@ content.text(element.date)
 
 sButton.addEventListener('click', (event) => {
     event.preventDefault();
-    GeoStatus = false
-    //get value from searchbox eg:-Cranbourne
+    if(inputSearch.value!="")
+    {
 
-
-    const city = inputSearch.value
-    addressToGeoCode(city)
-
-    recentLists.push(city)
-
-
-    let uniquerecentList = recentLists.filter((c, index) => {
-        return recentLists.indexOf(c) === index;
-    });
-
-
-    create_recentLists(recentLists)
-
-    localStorage.setItem("movie-data", JSON.stringify(uniquerecentList));
-    inputSearch.value=''
-
-    if (GeoStatus) {
-        console.log('i have geo-')
-
-    } else {
-        console.log('i need to wait')
-        setTimeout(getGeo, 300); // try again in 300 milliseconds
+        GeoStatus = false
+        //get value from searchbox eg:-Cranbourne
+    
+    
+        const city = inputSearch.value
+        addressToGeoCode(city)
+    
+        recentLists.push(city)
+    
+    
+        let uniquerecentList = recentLists.filter((c, index) => {
+            return recentLists.indexOf(c) === index;
+        });
+    
+    
+        create_recentLists(recentLists)
+    
+        localStorage.setItem("movie-data", JSON.stringify(uniquerecentList));
+        inputSearch.value=''
+    
+        if (GeoStatus) {
+            // console.log('i have geo-')
+    
+        } else {
+            // console.log('i need to wait')
+            setTimeout(getGeo, 300); // try again in 300 milliseconds
+        }
+    }
+    else{
+        alertify.message("Please enter a city...")
     }
 
-
-
-
-
-
-
 })
-
-
-// $(document).on('click','.cards',(event)=>{
-
-//     var text = $(event.target).text();
-//     console.log(text)
-
- 
-
-
-    
- 
-// })
 
 
 
@@ -408,9 +437,10 @@ autocomplete_city = new google.maps.places.Autocomplete(
     });
 
 
-// $(document).on('click','.card',(event)=>{
-//    console.log(event.target.getAttribute('id'))     
-// })
+    function pauseVideo(){
+        // console.log('end')
+        video.pause();
+    }   
 
 /////////////////////////////////////////////////////////////////////////////////////////////////codeabove mazahim
 // About Us
