@@ -490,7 +490,7 @@ function aboutUsContentCreation() {
 
     // first column
     var aboutUsContentParentUIGridColumnsFirst = $('<div>');
-    aboutUsContentParentUIGridColumnsFirst.attr('class', 'sixteen wide column teal');
+    aboutUsContentParentUIGridColumnsFirst.attr('class', 'sixteen wide column orange');
     aboutUsContentParentUIGrid.append(aboutUsContentParentUIGridColumnsFirst);
 
 
@@ -504,36 +504,37 @@ function aboutUsContentCreation() {
     aboutUsContentParentUIGridColumnsSecond.append(aboutUsContentParentSecondColUISegment);
 
     var aboutUsContentParentSecondColUIGrid = $('<div>');
-    aboutUsContentParentSecondColUIGrid.attr('class', 'ui grid doubling stackable container');
+    aboutUsContentParentSecondColUIGrid.attr('class', 'ui relaxed padded grid doubling stackable container');
     aboutUsContentParentSecondColUISegment.append(aboutUsContentParentSecondColUIGrid);
 
     var aboutUsContentParentSecondColSubCol1 = $('<div>');
-    aboutUsContentParentSecondColSubCol1.attr('class', 'four wide column olive');
+    aboutUsContentParentSecondColSubCol1.attr('class', 'four wide column');
     aboutUsContentParentSecondColUIGrid.append(aboutUsContentParentSecondColSubCol1);
 
     var aboutUsContentParentSecondColSubCol2 = $('<div>');
-    aboutUsContentParentSecondColSubCol2.attr('class', 'four wide column green');
+    aboutUsContentParentSecondColSubCol2.attr('class', 'four wide column');
     aboutUsContentParentSecondColUIGrid.append(aboutUsContentParentSecondColSubCol2);
 
     var aboutUsContentParentSecondColSubCol3 = $('<div>');
-    aboutUsContentParentSecondColSubCol3.attr('class', 'four wide column teal');
+    aboutUsContentParentSecondColSubCol3.attr('class', 'four wide column');
     aboutUsContentParentSecondColUIGrid.append(aboutUsContentParentSecondColSubCol3);
 
     var aboutUsContentParentSecondColSubCol4 = $('<div>');
-    aboutUsContentParentSecondColSubCol4.attr('class', 'four wide column blue');
+    aboutUsContentParentSecondColSubCol4.attr('class', 'four wide column');
     aboutUsContentParentSecondColUIGrid.append(aboutUsContentParentSecondColSubCol4);
 
 
     // third column
 
     var aboutUsContentParentUIGridColumnsThird = $('<div>');
-    aboutUsContentParentUIGridColumnsThird.attr('class', 'sixteen wide column orange');
+    aboutUsContentParentUIGridColumnsThird.attr('class', 'sixteen wide column teal');
+    aboutUsContentParentUIGridColumnsThird.attr('style', 'color:black');
     aboutUsContentParentUIGrid.append(aboutUsContentParentUIGridColumnsThird);
 
     // fourth column
 
     var aboutUsContentParentUIGridColumnsFourth = $('<div>');
-    aboutUsContentParentUIGridColumnsFourth.attr('class', 'sixteen wide column teal');
+    aboutUsContentParentUIGridColumnsFourth.attr('class', 'sixteen wide column orange');
     aboutUsContentParentUIGrid.append(aboutUsContentParentUIGridColumnsFourth);
 
 
@@ -617,6 +618,7 @@ function aboutUsContentCreation() {
     var aboutUsProjectRepositoryURL = $('<a>');
     aboutUsProjectRepositoryURL.attr('class', 'aboutUsContentChild');
     aboutUsProjectRepositoryURL.attr('href', 'https://github.com/Black-Mandarin/Go-to-your-Movie');
+    aboutUsProjectRepositoryURL.attr('style', 'font-size: 18px; color:black');
     aboutUsProjectRepositoryURL.text('Repository URL');
     aboutUsContentParentUIGridColumnsFourth.append(aboutUsProjectRepositoryURL);
 
