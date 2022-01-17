@@ -496,7 +496,7 @@ function aboutUsContentCreation() {
 
     // second column and further subdivision
     var aboutUsContentParentUIGridColumnsSecond = $('<div>');
-    aboutUsContentParentUIGridColumnsSecond.attr('class', 'sixteen wide column');
+    aboutUsContentParentUIGridColumnsSecond.attr('class', 'sixteen wide column teal');
     aboutUsContentParentUIGrid.append(aboutUsContentParentUIGridColumnsSecond);
 
     var aboutUsContentParentSecondColUISegment = $('<div>');
@@ -558,6 +558,7 @@ function aboutUsContentCreation() {
     var aboutUsGroup = $('<h4>');
     aboutUsGroup.attr('class', 'aboutUsContentChild');
     aboutUsGroup.text('Alan Cherian : Developer');
+    aboutUsGroup.attr('style', 'color:black');
     aboutUsContentParentSecondColSubCol1.append(aboutUsGroup);
 
     // Adding project member profile image
@@ -572,6 +573,7 @@ function aboutUsContentCreation() {
     var aboutUsGroup = $('<h4>');
     aboutUsGroup.attr('class', 'aboutUsContentChild');
     aboutUsGroup.text('Erin Hatherell : Developer');
+    aboutUsGroup.attr('style', 'color:black');
     aboutUsContentParentSecondColSubCol2.append(aboutUsGroup);
 
     // Adding project member profile image
@@ -586,6 +588,7 @@ function aboutUsContentCreation() {
     var aboutUsGroup = $('<h4>');
     aboutUsGroup.attr('class', 'aboutUsContentChild');
     aboutUsGroup.text('Mohammed Mazahim : Developer');
+    aboutUsGroup.attr('style', 'color:black');
     aboutUsContentParentSecondColSubCol3.append(aboutUsGroup);
 
     // Adding project member profile image
@@ -600,6 +603,7 @@ function aboutUsContentCreation() {
     var aboutUsGroup = $('<h4>');
     aboutUsGroup.attr('class', 'aboutUsContentChild');
     aboutUsGroup.text('Sanjeev Kumar : Developer');
+    aboutUsGroup.attr('style', 'color:black');
     aboutUsContentParentSecondColSubCol4.append(aboutUsGroup);
 
     // Adding project member in apphabetical order
