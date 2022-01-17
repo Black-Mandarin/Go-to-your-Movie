@@ -7,21 +7,20 @@ var loader = document.querySelector("#loader")
 var ol_listItem = document.querySelector("#olList")
 var modal = document.getElementById('myModal');
 
-var video = document.getElementById("myVideo"); 
-var parentvideo = document.getElementById("parentvideo"); 
+var video = document.getElementById("myVideo");
+var parentvideo = document.getElementById("parentvideo");
 
 var listOfCinemasNearMe;
 var listOfRunningFilmsInCinema = [];
 
-main.style.display="none"
+main.style.display = "none"
 var geo;
 var GeoStatus = false;
 
-var recentLists=[];
+var recentLists = [];
 //assigning default header
 var cloneHeaders;
 var header =
-
 
 {
 
@@ -32,7 +31,6 @@ var header =
     "api-version": "v200",
     "geolocation": '',
     "device-datetime": moment().format()
-
 
     //limited call -75
 
@@ -48,87 +46,76 @@ var header =
 
 function getGeoLocationByDefault() {
 
+    navigator.geolocation.watchPosition(function (position) {
 
-    navigator.geolocation.watchPosition(function(position) {
+        geo = position.coords
+        GeoStatus = true
+    },
+        function (error) {
+            if (error.code == error.PERMISSION_DENIED)
+                alertify.warning('Please allow GeoLOcation inorder to get best user experience')
 
+            addressToGeoCode('Melbourne VIC, Australia')
 
-            geo = position.coords
-            GeoStatus = true
+            if (GeoStatus) {
+                // console.log('i have geo-')
 
-      },
-      function(error) {
-        if (error.code == error.PERMISSION_DENIED)
-        alertify.warning('Please allow GeoLOcation inorder to get best user experience')
+            } else {
+                // console.log('i need to wait')
+                setTimeout(getGeo, 300); // try again in 300 milliseconds
+            }
 
-        addressToGeoCode('Melbourne VIC, Australia')
-
-        if (GeoStatus) {
-            // console.log('i have geo-')
-    
-        } else {
-            // console.log('i need to wait')
-            setTimeout(getGeo, 300); // try again in 300 milliseconds
-        }
-   
-      });
-
-
+        });
 
 }
 
 //call method
 getGeoLocationByDefault()
 
-
-
-
 var retrievedData = localStorage.getItem("movie-data");
-if(retrievedData!=null){
+if (retrievedData != null) {
     var myData = JSON.parse(retrievedData);
-    myData.forEach((data)=>{
+    myData.forEach((data) => {
         recentLists.push(data)
     })
-    
+
 }
 
-function create_recentLists(myArray){
+function create_recentLists(myArray) {
     $('#olList').empty();
-    var index=0
-    myArray.forEach((list)=>{
-        
-      
-const li= document.createElement('li')
-li.setAttribute('style','color:black')
-ol_listItem.appendChild(li)
-li.textContent=list
-
-       li.addEventListener('click',(event)=>{
-        GeoStatus=false
-
-          console.log(list)
-          addressToGeoCode(list)
+    var index = 0
+    myArray.forEach((list) => {
 
 
-          if (GeoStatus) {
-            // console.log('i have geo-')
-    
-        } else {
-            // console.log('i need to wait')
-            setTimeout(getGeo, 300); // try again in 300 milliseconds
-        }
-      
-       })  
-           
-     
-     
+        const li = document.createElement('li')
+        li.setAttribute('style', 'color:black')
+        ol_listItem.appendChild(li)
+        li.textContent = list
+
+        li.addEventListener('click', (event) => {
+            GeoStatus = false
+
+            console.log(list)
+            addressToGeoCode(list)
+
+            if (GeoStatus) {
+                // console.log('i have geo-')
+
+            } else {
+                // console.log('i need to wait')
+                setTimeout(getGeo, 300); // try again in 300 milliseconds
+            }
+
+        })
+
     })
-    
+
 }
 
 create_recentLists(recentLists)
 
 function addressToGeoCode(city) {
-   
+
     var url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + city + '&key=AIzaSyBi2s5puIfi0U5S0NRdR4NiprHdtQf2JFA'
     fetch(url)
         .then(function (response) {
@@ -143,7 +130,6 @@ function addressToGeoCode(city) {
                         geo.longitude = mygeo.lng
                         GeoStatus = true
 
-
                     }
                 });
             } else {
@@ -154,24 +140,19 @@ function addressToGeoCode(city) {
             alert('Unable to connect to google API');
         });
 
-
-
 }
 
 function getGeo() {
 
-
     if (GeoStatus) {
         // console.log('i have geo-')
-       
-
 
         cloneHeaders = { ...header };
         //for real api
-       //  cloneHeaders.geolocation=geo.latitude.toFixed(2).toString()+';'+geo.longitude.toFixed(2).toString()
+        //  cloneHeaders.geolocation=geo.latitude.toFixed(2).toString()+';'+geo.longitude.toFixed(2).toString()
 
         //for sandbox api
-       cloneHeaders.geolocation = '-22.0;14.0'
+        cloneHeaders.geolocation = '-22.0;14.0'
 
         axios?.get('https://api-gate2.movieglu.com/cinemasNearby/?n=10', {
             headers: cloneHeaders
@@ -187,9 +168,6 @@ function getGeo() {
                     headers: cloneHeaders
                 }).then((response) => {
 
-              
-         
-
                     var data = {
                         cinema_name: cinema_name,
                         films: response.data.films
@@ -203,24 +181,18 @@ function getGeo() {
             })
             // console.log(listOfCinemasNearMe, listOfRunningFilmsInCinema);
             displayListOfCinemasNearMe();
-            loader.style.display="none"
-            main.style.display="block"
+            loader.style.display = "none"
+            main.style.display = "block"
             alertify.success('Connected to Saver');
 
         })
         //////////////////////
 
     } else {
-      
-
-
-
-
 
         setTimeout(getGeo, 300); // try again in 300 milliseconds
     }
 }
-
 
 getGeo();
 
@@ -248,12 +220,12 @@ $(document).on('click', '.eachCinemas', function (event) {
 // display list of running films as per selected cinemas 
 
 function displaylistOfFilmsRunningNow(cinemaName) {
-    
+
     $('#listOfFilms').empty();
     listOfRunningFilmsInCinema.forEach(function (element) {
         if (element.cinema_name === cinemaName) {
             element.films.forEach(function (film) {
-              
+
                 var card = $('<div>');
                 card.attr('class', 'card');
                 card.attr('style', 'width:215px');
@@ -286,100 +258,90 @@ function displaylistOfFilmsRunningNow(cinemaName) {
                 card.append(extra_content);
                 $('#listOfFilms').append(card);
 
-$('#'+film.film_id).on('click',()=>{
+                $('#' + film.film_id).on('click', () => {
 
-    //i am trying to remove video and load new
-    // video.pause();
-    // video.removeChild(video.childNodes[0]);    
-  
+                    //i am trying to remove video and load new
+                    // video.pause();
+                    // video.removeChild(video.childNodes[0]);    
 
-   axios.get('https://api-gate2.movieglu.com/filmDetails/?film_id='+film.film_id, {
-    headers: cloneHeaders
-}).then((response) => {
-const {synopsis_long,show_dates,cast,directors,producers,writers}=response.data
-
- 
-var source = document.createElement('source');
-
-source.setAttribute('src', response?.data?.trailers?.high[0]?.film_trailer);
-source.setAttribute('type', 'video/mp4');
-video.appendChild(source);
-
-$('#movieName').text(film.film_name)
-$('#descriptionMovie').text(synopsis_long)
-$("#myModal").modal('show');
+                    axios.get('https://api-gate2.movieglu.com/filmDetails/?film_id=' + film.film_id, {
+                        headers: cloneHeaders
+                    }).then((response) => {
+                        const { synopsis_long, show_dates, cast, directors, producers, writers } = response.data
 
 
-show_dates.map((element)=>{
+                        var source = document.createElement('source');
 
+                        source.setAttribute('src', response?.data?.trailers?.high[0]?.film_trailer);
+                        source.setAttribute('type', 'video/mp4');
+                        video.appendChild(source);
 
-var item=$('<div>')
-item.attr('class', 'item')
-$('#horizontalList').append(item)
+                        $('#movieName').text(film.film_name)
+                        $('#descriptionMovie').text(synopsis_long)
+                        $("#myModal").modal('show');
 
-var content=$('<div>')
-content.attr('class', 'content')
-item.append(content)
-content.text(element.date)
+                        show_dates.map((element) => {
 
-})
+                            var item = $('<div>')
+                            item.attr('class', 'item')
+                            $('#horizontalList').append(item)
 
+                            var content = $('<div>')
+                            content.attr('class', 'content')
+                            item.append(content)
+                            content.text(element.date)
 
-cast.map((cast)=>{
+                        })
 
-var item1=$('<div>')
-item1.attr('class','item')
-$('#cast').append(item1)
+                        cast.map((cast) => {
 
-var content1=$('<div>')
-content1.attr('class', 'content')
-item1.append(content1)
+                            var item1 = $('<div>')
+                            item1.attr('class', 'item')
+                            $('#cast').append(item1)
 
-var header1=$('<div>')
-header1.attr('class', 'header')
-content1.append(header1)
-header1.text(cast.cast_name)
-})
+                            var content1 = $('<div>')
+                            content1.attr('class', 'content')
+                            item1.append(content1)
 
-directors.map((director)=>{
-    var item2=$('<div>')
-    item2.attr('class','item')
-    $('#dir').append(item2)
-    
-    var content2=$('<div>')
-    content2.attr('class', 'content')
-    item2.append(content2)
-    
-    var header2=$('<div>')
-    header2.attr('class', 'header')
-    content2.append(header2)
-    header2.text(director.director_name)
-})
+                            var header1 = $('<div>')
+                            header1.attr('class', 'header')
+                            content1.append(header1)
+                            header1.text(cast.cast_name)
+                        })
 
-producers.map((producer)=>{
-    var item3=$('<div>')
-    item3.attr('class','item')
-    $('#pro').append(item3)
-    
-    var content3=$('<div>')
-    content3.attr('class', 'content')
-    item3.append(content3)
-    
-    var header3=$('<div>')
-    header3.attr('class', 'header')
-    content3.append(header3)
-    header3.text(producer.producer_name)
-})
+                        directors.map((director) => {
+                            var item2 = $('<div>')
+                            item2.attr('class', 'item')
+                            $('#dir').append(item2)
 
-})
+                            var content2 = $('<div>')
+                            content2.attr('class', 'content')
+                            item2.append(content2)
 
+                            var header2 = $('<div>')
+                            header2.attr('class', 'header')
+                            content2.append(header2)
+                            header2.text(director.director_name)
+                        })
 
+                        producers.map((producer) => {
+                            var item3 = $('<div>')
+                            item3.attr('class', 'item')
+                            $('#pro').append(item3)
 
+                            var content3 = $('<div>')
+                            content3.attr('class', 'content')
+                            item3.append(content3)
 
+                            var header3 = $('<div>')
+                            header3.attr('class', 'header')
+                            content3.append(header3)
+                            header3.text(producer.producer_name)
+                        })
 
-   
+                    })
 
-})
+                })
 
             });
         }
@@ -387,60 +349,51 @@ producers.map((producer)=>{
 
 }
 
-
-
 sButton.addEventListener('click', (event) => {
     event.preventDefault();
-    if(inputSearch.value!="")
-    {
+    if (inputSearch.value != "") {
 
         GeoStatus = false
-        //get value from searchbox eg:-Cranbourne
-    
-    
+        //get value from searchbox eg:-Cranbourne    
+
         const city = inputSearch.value
         addressToGeoCode(city)
-    
+
         recentLists.push(city)
-    
-    
+
         let uniquerecentList = recentLists.filter((c, index) => {
             return recentLists.indexOf(c) === index;
         });
-    
-    
+
         create_recentLists(recentLists)
-    
+
         localStorage.setItem("movie-data", JSON.stringify(uniquerecentList));
-        inputSearch.value=''
-    
+        inputSearch.value = ''
+
         if (GeoStatus) {
             // console.log('i have geo-')
-    
+
         } else {
             // console.log('i need to wait')
             setTimeout(getGeo, 300); // try again in 300 milliseconds
         }
     }
-    else{
+    else {
         alertify.message("Please enter a city...")
     }
 
 })
 
-
-
 autocomplete_city = new google.maps.places.Autocomplete(
     (document.getElementById('inputSearch')), {
-      types: ['(cities)'],
-      componentRestrictions: {country: 'AU'}
-    });
+    types: ['(cities)'],
+    componentRestrictions: { country: 'AU' }
+});
 
-
-    function pauseVideo(){
-        // console.log('end')
-        video.pause();
-    }   
+function pauseVideo() {
+    // console.log('end')
+    video.pause();
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////////////codeabove mazahim
 // About Us
