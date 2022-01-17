@@ -270,11 +270,11 @@ function displaylistOfFilmsRunningNow(cinemaName) {
                         const { synopsis_long, show_dates, cast, directors, producers, writers } = response.data
 
 
-                        var source = document.createElement('source');
+                        // var source = document.createElement('source');
 
-                        source.setAttribute('src', response?.data?.trailers?.high[0]?.film_trailer);
-                        source.setAttribute('type', 'video/mp4');
-                        video.appendChild(source);
+                        // source.setAttribute('src', response?.data?.trailers?.high[0]?.film_trailer);
+                        // source.setAttribute('type', 'video/mp4');
+                        // video.appendChild(source);
 
                         $('#movieName').text(film.film_name)
                         $('#descriptionMovie').text(synopsis_long)
